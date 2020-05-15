@@ -1,75 +1,71 @@
-import React, { Component } from "react"
-import axios from "axios"
+import React, { useState } from "react"
 import './login.css'
-import { Form, Button } from 'react-bootstrap';
-import { loginTk } from '../../auth/utils/index';
-import { Redirect } from "react-router-dom";
+import axios from "axios"
+import { Form, Input, Button } from 'antd'
+import { setToken } from "../../utils/auth"
 
-class Login extends Component {
-    constructor(props) {
-        super(props)
+export default function Login() {
 
-        this.state = {
-            formData: {}, // Contains login form data
-            errors: {}, // Contains login field errors
-            formSubmitted: false, // Indicates submit status of login form
-            loading: false, // Indicates in progress state of login form
-            redirect: false
-        }
+    const login = () => {
+
     }
 
-    handleInputChange = (event) => {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-
-        let { formData } = this.state;
-        formData[name] = value;
-
-        this.setState({
-            formData: formData
-        });
+    const layout = {
+        labelCol: { span: 8 },
+        wrapperCol: { span: 16 },
     }
 
+    const tailLayout = {
+        wrapperCol: { offset: 8, span: 16 },
+    }
 
-    login = (e) => {
+    const onFinish = values => {
+        axios.post('/api/login', values)
+        .then(response => {
+            if (response.data.status_code === "200") {
+                setToken(response.data.token)
+                window.location.replace("/")
+            }
+        }).catch(e => console.log(e))
+        console.log('Success:', values);
+    }
 
-        e.preventDefault();
-        axios.post('/api/login', this.state.formData)
-            .then(response => {
-                if (response.data.status_code === "200") {
-                    loginTk(response.data.token)
-                    this.setState({ redirect: true })
-                }
-            }).catch(e => console.log(e))
-
+    const onFinishFailed = errorInfo => {
+        console.log('Failed:', errorInfo);
     }
 
 
 
-    render() {
-        return (
-            <div className="login">
-                <Form onSubmit={this.login}>
-                    <h1>Lesoft</h1>
-                    <Form.Group controlId="username"  >
-                        <Form.Label>Usuario</Form.Label>
-                        <Form.Control type="text" name="username" required placeholder="Entre com o usuario" onChange={this.handleInputChange} />
-                    </Form.Group>
+    return (
+        <Form
+            {...layout}
+            className="login"
+            name="basic"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+        >
+            <Form.Item
+                label="Usuário"
+                name="username"
+                rules={[{ required: true, message: 'Por favor preencha o Usuário!' }]}
+            >
+                <Input />
+            </Form.Item>
 
-                    <Form.Group controlId="password" >
-                        <Form.Label>Senha</Form.Label>
-                        <Form.Control type="password" name="password" required placeholder="Password" onChange={this.handleInputChange} />
-                    </Form.Group>
+            <Form.Item
+                label="Senha"
+                name="password"
+                rules={[{ required: true, message: 'Por favor preencha a Senha!' }]}
+            >
+                <Input.Password />
+            </Form.Item>
 
-                    <Button variant="primary" type="submit">
-                        Entrar
-                    </Button>
-                    { this.state.redirect && <Redirect to="/home" />}
-                </Form>
-            </div>
-        )
-    }
+            <Form.Item {...tailLayout} >
+                <Button type="primary" htmlType="submit">
+                    Entrar
+                     </Button>
+            </Form.Item>
+        </Form>
+    )
 }
-
-export default Login

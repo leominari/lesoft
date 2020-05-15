@@ -1,75 +1,71 @@
-import React from 'react'
-import { Button } from 'react-bootstrap'
-import { BrowserRouter as Router, Link } from "react-router-dom"
-import { logoutTk } from '../../auth/utils/index'
-import { Redirect } from 'react-router-dom'
-import PrivateRoute from '../../auth/PrivateRoute'
+import React, { useState } from "react";
+import { removeToken } from "../../utils/auth";
+import { Link } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb } from 'antd';
+import {
+    DesktopOutlined,
+    PieChartOutlined,
+    FileOutlined,
+    TeamOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
 
-import Dashboard from './Dashboard'
-import Colaborador from '../colaborador/Colaborador'
-import Pedidos from '../pedidos/Pedidos'
 
 
-class Home extends React.Component {
-
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            redirect: false
-        }
+export default function Home() {
+    const logout = () => {
+        removeToken();
     }
 
-    logout = (e) => {
-        e.preventDefault();
-        logoutTk()
-        this.props.history.push('/');
-        // axios.post('/api/login', this.state.formData)
-        //     .then(response => {
-        //         if (response.data.status_code === "200") {
-        //             this.setState({ redirect: true })
-        //         }
-        //     }).catch(e => console.log(e))
-    }
+    const { Header, Content, Footer, Sider } = Layout;
+    const { SubMenu } = Menu;
+
+    const [collapse, isCollapsed] = useState(false);
+
+    const onCollapse = collapsed => collapse ? isCollapsed(false) : isCollapsed(true) 
+    //  <LogoutOutlined /> 
+    return (
+        <Layout style={{ minHeight: '100vh' }}>
+            <Sider collapsible collapsed={collapse}
+                onCollapse={onCollapse} >
+                <div className="logo" />    
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" >
+                    <Menu.Item key="1" icon={< PieChartOutlined />} >
+                        Option 1 
+                    </Menu.Item> 
+                    <Menu.Item key="2"icon={< DesktopOutlined />} >
+                        Option 2 
+                    </Menu.Item> 
+                    <SubMenu key="sub1" icon={<UserOutlined />} title="User">
+                        <Menu.Item key="3"> Tom </Menu.Item>
+                        <Menu.Item key="4"> Bill </Menu.Item> 
+                        <Menu.Item key="5"> Alex </Menu.Item> 
+                    </SubMenu> 
+                    <SubMenu key="sub2"
+                            icon={< TeamOutlined />}
+                            title="Team" >
+                            <Menu.Item key="6" > Team 1 </Menu.Item> 
+                            <Menu.Item key="8" > Team 2 </Menu.Item> 
+                    </SubMenu> 
+                    <Menu.Item key="9" icon={< FileOutlined />}/> 
+                </Menu> 
+            </Sider> 
+            <Layout className="site-layout" >
+                <Header className="site-layout-background" style={{ padding: 0 }}/> 
+                <Content style={{ margin: '0 16px' }} >
+                    <Breadcrumb style={{ margin: '16px 0' }} >
+                        <Breadcrumb.Item > User </Breadcrumb.Item>
+                        <Breadcrumb.Item > Bill </Breadcrumb.Item> 
+                    </Breadcrumb> 
+                    <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }} >
+                        Bill is a cat. 
+                    </div> 
+                </Content> 
+                { /* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */} 
+            </Layout> 
+        </Layout>
+    )
 
 
-    render() {
-        return (
-            <Router>
-                <div>
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                        <Link to="/home" className="navbar-brand">Lesoft</Link>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarText">
-                            <ul className="navbar-nav mr-auto">
-                                <li className="nav-item">
-                                    <Link to="/home"className="nav-link"> Home </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/colaboradores" className="nav-link">Colaboradores</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/pedidos" className="nav-link">Pedidos</Link>
-                                </li>
-                            </ul>
-                            <span className="navbar-text">
-                                <Button variant="primary" type="submit" onClick={this.logout}>Sair</Button>
-                            </span>
-                        </div>
-                    </nav>
-                    {this.state.redirect && <Redirect to="/" />}
-                </div>
-                <div>
-                    <PrivateRoute path="/home" component={Dashboard} />
-                    <PrivateRoute path="/colaboradores" component={Colaborador} />
-                    <PrivateRoute path="/pedidos" component={Pedidos} />
-                </div>
-            </Router>
 
-        )
-    }
 }
-
-export default Home
