@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -22,8 +24,13 @@ class LoginController extends Controller
         $busca = User::where('user', $userName)->get();
         if (sizeof($busca) > 0) {
             if (($busca[0]->user === $userName) && Hash::check($userPassword, $busca[0]->password)) {
-                // $token = User::where()
-                return response()->json(['status_code'=>'200','token' => $busca[0]->api_token, 'user_id' => $busca[0]->id]);
+                $token = Str::random(80);
+                $resultado = DB::table('UserToken')->insert([
+                    'nome' => $request->nomeColaborador,
+                    'tipo' => $request->tipoColaborador,
+                 ]);
+                 
+                return response()->json(['status_code'=>'200','token' => $token, 'user_id' => $busca[0]->id]);
             } else {
                 return response()->json(['status_code'=>'201']);
             }

@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
                 'nome' => 'Leonardo Minari',
                 'tipo' => 'cliente-pj',
             ]),
-            'api_token' => Str::random(80),
             'remember_token' => Str::random(10),
         ]);
         // $this->call(UsersTableSeeder::class);
