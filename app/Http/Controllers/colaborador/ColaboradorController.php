@@ -17,30 +17,13 @@ class ColaboradorController extends Controller
         return $colaboradores;
     }
 
-    public function novoColaborador(Request $request)
-    {
-        if ($request->session()->has('access')) {
-            if ($request->session()->get('access') === 'admin') {
-                return view('colaborador.novocolaborador');
-            }
-        }
-        return redirect()->route('login');
-    }
-
-
     public function newColaborador(Request $request)
     {
-        if ($request->session()->has('access')) {
-            if ($request->session()->get('access') === 'admin') {
-
-                $resultado = DB::table('colaboradores')->insert([
-                    'nome' => $request->nomeColaborador,
-                    'tipo' => $request->tipoColaborador,
-                    // 'preco' => $request->precoProduto,
-                ]);
-                return redirect()->route('colab.home');
-            }
-        }
-        return redirect()->route('login');
+        file_put_contents("batata1.txt", $request);
+        return 'salve';
+        // $resultado = DB::table('colaboradores')->insert([
+        //     'nome' => $request->nomeColaborador,
+        //     'tipo' => $request->tipoColaborador,
+        // ]);
     }
 }

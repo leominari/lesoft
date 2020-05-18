@@ -1,14 +1,14 @@
 import React from 'react'
 
-export default function Dashboard(){
+export default function Produto(){
 
     const sty = {
-        background: 'green'
+        background: 'red'
     }
 
     return(
         <div style={sty}>
-            Bem vindo
+            Produtos
         </div>
     );
 }

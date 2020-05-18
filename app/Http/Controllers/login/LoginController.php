@@ -20,7 +20,6 @@ class LoginController extends Controller
         $userName = $request->username;
         $userPassword = $request->password;
         $busca = User::where('user', $userName)->get();
-        file_put_contents("batata1.txt", $request);
         if (sizeof($busca) > 0) {
             if (($busca[0]->user === $userName) && Hash::check($userPassword, $busca[0]->password)) {
                 // $token = User::where()

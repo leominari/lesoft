@@ -1,48 +1,133 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Table, Button, Modal, Form, Input } from 'antd'
 import './styles/colab.css'
-import NovoColaborador from './CadastroForm'
+
 import Axios from 'axios'
-class Colaborador extends React.Component {
-    constructor(props) {
-        super(props)
-        Axios.get('/api/colaborador/todos').then(response => {
-            this.state = {
-                colaboradores: response.data
-            }
-            console.log(this.state.colaboradores)
-        })
-    }
+
+import { getToken } from '../../utils/auth';
+
+export default function Colaborador() {
+
+    const [colaboradores, setColaboradores] = useState([])
+    const [novoDado, Adicionado] = useState(false)
+
+    useEffect(() => {
+        async function CarregaColaboradores() {
+            const response = await fetch('/api/colaborador/todos')
+            const data = await response.json();
+            const resp = []
+            data.forEach(element => {
+                resp.push({
+                    key: element.id,
+                    nome: element.nome,
+                    tipo: element.tipo
+                })
+            });
+            setColaboradores(resp)
+        }
+        CarregaColaboradores()
+    }, [novoDado])
+
+    const columns = [
+        {
+            title: 'Código do Colaborador',
+            dataIndex: 'key',
+            key: 'key'
+
+        },
+        {
+            title: 'Nome',
+            dataIndex: 'nome',
+            key: 'nome'
+
+        },
+        {
+            title: 'Tipo',
+            dataIndex: 'tipo',
+            key: 'tipo'
+        },
+    ];
+
+    return (
+        <div>
+            <ModalColab />
+            <Table dataSource={colaboradores} columns={columns} className="distancia-botao" />
+        </div>
+    );
 
 
-    render() {
+
+    // METODOS
+
+    function ModalColab() {
+
+        const [ModalVisible, isVisible] = useState(false)
+        const showModal = () => isVisible(true);
+
+        const layout = {
+            labelCol: { span: 4 },
+            wrapperCol: { span: 18 },
+        };
+
+        const validateMessages = {
+            required: '${label} é necessário!',
+            types: {
+                email: '${label} is not validate email!',
+                number: '${label} is not a validate number!',
+            },
+            number: {
+                range: '${label} must be between ${min} and ${max}',
+            },
+        };
+
+        const CadastrarColaborador = values => {
+            console.log(getToken());
+            Axios.post('/api/colaborador/new', { 
+                values: values.user,
+                token: getToken()
+            }).then(response => {
+                console.log(response.data)
+            })
+            isVisible(false)
+        };
+
+        const FecharModal = e => {
+            isVisible(false)
+        };
+
 
         return (
-            <div className="padrao">
-                <NovoColaborador tipo="fisica" sub={this.cadastrar}></NovoColaborador>
-                {/* <NovoColaborador tipo="juridica" sub={this.cadastrar}></NovoColaborador> */}
-                <table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>First Name</th>
+            <div>
+                <Button onClick={showModal}>
+                    Novo Colaborador
+                    </Button>
+                <Modal
+                    title="Novo Colaborador"
+                    visible={ModalVisible}
+                    footer={false}
+                    onCancel={FecharModal}
+                >
+                    <Form {...layout} name="nest-messages" onFinish={CadastrarColaborador} validateMessages={validateMessages}>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jacob</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <Form.Item name={['user', 'nome']} label="Name" rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name={['user', 'tipo']} label="Tipo" rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                            <Button className="distancia-direita10" type="primary" onClick={FecharModal} >
+                                Cancelar
+                            </Button>
+                            <Button type="primary" htmlType="submit">
+                                Cadastrar
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
             </div>
         )
+
     }
 }
 
-export default Colaborador

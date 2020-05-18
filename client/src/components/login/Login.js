@@ -1,14 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import './login.css'
 import axios from "axios"
 import { Form, Input, Button } from 'antd'
 import { setToken } from "../../utils/auth"
 
 export default function Login() {
-
-    const login = () => {
-
-    }
 
     const layout = {
         labelCol: { span: 8 },
@@ -24,10 +20,9 @@ export default function Login() {
         .then(response => {
             if (response.data.status_code === "200") {
                 setToken(response.data.token)
-                window.location.replace("/")
+                window.location.replace("/home")
             }
         }).catch(e => console.log(e))
-        console.log('Success:', values);
     }
 
     const onFinishFailed = errorInfo => {
