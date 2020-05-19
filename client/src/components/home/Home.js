@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { removeToken } from "../../utils/auth";
+import { removeToken, getToken } from "../../utils/auth";
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import {
@@ -9,6 +9,7 @@ import {
 
 } from '@ant-design/icons';
 import './styles/home.css'
+import axios from 'axios'
 
 import { HomeRoutes } from '../../routes'
 
@@ -16,8 +17,13 @@ import { HomeRoutes } from '../../routes'
 export default function Home(props) {
 
     const logout = () => {
-        removeToken();
-        window.location.replace("/")
+        axios.post('/api/logout', { token: getToken() })
+            .then(response => {
+                if (response.data.status_code === "200") {
+                    removeToken();
+                    window.location.replace("/")
+                }
+            }).catch(e => console.log(e))
     }
 
 

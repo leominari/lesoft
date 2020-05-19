@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Modal, Form, Input } from 'antd'
+import { Table, Button, Modal, Form, Input, notification } from 'antd'
 import './styles/colab.css'
 
 import Axios from 'axios'
@@ -13,10 +13,11 @@ export default function Colaborador() {
 
     useEffect(() => {
         async function CarregaColaboradores() {
-            const response = await fetch('/api/colaborador/todos')
-            const data = await response.json();
+            const getUrl = '/api/colaborador/todos' + getToken()
+            const response = await Axios.get(getUrl, { token: getToken() })
             const resp = []
-            data.forEach(element => {
+            console.log(response.data)
+            response.data.forEach(element => {
                 resp.push({
                     key: element.id,
                     nome: element.nome,
@@ -70,25 +71,28 @@ export default function Colaborador() {
         };
 
         const validateMessages = {
-            required: '${label} é necessário!',
-            types: {
-                email: '${label} is not validate email!',
-                number: '${label} is not a validate number!',
-            },
-            number: {
-                range: '${label} must be between ${min} and ${max}',
-            },
+            required: '${label} é necessário!'
         };
 
-        const CadastrarColaborador = values => {
-            console.log(getToken());
-            Axios.post('/api/colaborador/new', { 
-                values: values.user,
+
+        const CadastrarColaborador = async function (values) {
+            const response = await Axios.post('/api/colaborador/new', {
+                ...values.user,
                 token: getToken()
-            }).then(response => {
-                console.log(response.data)
             })
-            isVisible(false)
+            if (response.data.status_code == 200) {
+                Adicionado(!novoDado)
+                isVisible(false)
+            } else {
+                notification.open({
+                    message: 'Erro no Cadastro',
+                    description:
+                        'Ocorreu um erro no cadastro, entre em contato com a adminitração do sistema.',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
+            }
         };
 
         const FecharModal = e => {

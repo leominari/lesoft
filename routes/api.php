@@ -14,13 +14,14 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/login', 'login\LoginController@dologin')->name('login');
+Route::post('/logout', 'login\LoginController@dologout')->name('logout');
 
 Route::get('/users', 'login\LoginController@index');
 
 // Route::get('/dologout', 'home\HomeController@dologout')->name('logout');
 
 Route::group(['prefix' => 'colaborador'], function () {
-    Route::get('/todos', ['uses' => 'colaborador\ColaboradorController@index']);
+    Route::get('/todos{token}', ['uses' => 'colaborador\ColaboradorController@index']);
     Route::post('/new', ['as' => 'colab.new', 'uses' => 'colaborador\ColaboradorController@newColaborador']);
 });
 

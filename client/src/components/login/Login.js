@@ -2,9 +2,13 @@ import React from "react"
 import './login.css'
 import axios from "axios"
 import { Form, Input, Button } from 'antd'
-import { setToken } from "../../utils/auth"
+import { setToken, isAuthenticated } from "../../utils/auth"
 
 export default function Login() {
+
+    if (isAuthenticated()) {
+        window.location.replace("/home")
+    }
 
     const layout = {
         labelCol: { span: 8 },
@@ -17,12 +21,12 @@ export default function Login() {
 
     const onFinish = values => {
         axios.post('/api/login', values)
-        .then(response => {
-            if (response.data.status_code === "200") {
-                setToken(response.data.token)
-                window.location.replace("/home")
-            }
-        }).catch(e => console.log(e))
+            .then(response => {
+                if (response.data.status_code === "200") {
+                    setToken(response.data.token)
+                    window.location.replace("/home")
+                }
+            }).catch(e => console.log(e))
     }
 
     const onFinishFailed = errorInfo => {

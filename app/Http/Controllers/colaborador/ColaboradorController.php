@@ -2,28 +2,41 @@
 
 namespace App\Http\Controllers\colaborador;
 
-use App\colaborador\Colaboradores;
 use App\Http\Controllers\Controller;
+use App\models\Colaborador;
+use App\models\UserToken;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ColaboradorController extends Controller
 {
 
 
-    public function index(Request $request)
+    public function index(Request $request, $token)
     {
-        $colaboradores = Colaboradores::all();
-        return $colaboradores;
+        // file_put_contents("debug1.txt", $token);
+        $Auth = UserToken::where('token', $token)->first();
+        if ($Auth->valid)
+            return Colaborador::all();
+        else {
+            return [];
+        }
     }
 
     public function newColaborador(Request $request)
     {
-        file_put_contents("batata1.txt", $request);
-        return 'salve';
-        // $resultado = DB::table('colaboradores')->insert([
-        //     'nome' => $request->nomeColaborador,
-        //     'tipo' => $request->tipoColaborador,
-        // ]);
+        $token = $request->token;
+        $Auth = UserToken::where('token', $token)->first();
+        if ($Auth->valid) {
+            $NovoColaborador = new Colaborador;
+            $NovoColaborador->nome = $request->nome;
+            $NovoColaborador->tipo = $request->tipo;
+            if ($NovoColaborador->save())
+                return response()->json(['status_code' => '200']);
+            else {
+                return response()->json(['status_code' => '201']);
+            }
+        } else {
+            return response()->json(['status_code' => '202']);
+        }
     }
 }
