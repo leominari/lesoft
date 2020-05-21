@@ -16,7 +16,12 @@ import { HomeRoutes } from '../../routes'
 
 export default function Home(props) {
 
-    const logout = () => {
+    const { Header, Content, Footer, Sider } = Layout;
+    const [collapse, isCollapsed] = useState(false);
+    const onCollapse = () => isCollapsed(!collapse)
+
+
+    function logout() {
         axios.post('/api/logout', { token: getToken() })
             .then(response => {
                 if (response.data.status_code === "200") {
@@ -25,16 +30,8 @@ export default function Home(props) {
                 }
             }).catch(e => console.log(e))
     }
-
-
-
-    const { Header, Content, Footer, Sider } = Layout;
-    // const { SubMenu } = Menu;
-
-    const [collapse, isCollapsed] = useState(false);
-
-    const onCollapse = () => isCollapsed(!collapse)
     //  <LogoutOutlined /> 
+
     return (
         <Layout style={{ minHeight: '100vh' }}>
 
@@ -42,17 +39,22 @@ export default function Home(props) {
                 onCollapse={onCollapse} >
                 <div className="logo">
                     <Link to="/home">
-                        <h1 style={{ textAlign: 'center' }}>Lesoft</h1>
+                        <h1 className="LogoTemp">Lesoft</h1>
                     </Link>
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" >
-                    <Menu.Item key="1" icon={< PieChartOutlined />} >
-                        <Link className="LinkMenu" to="/home/colab">
+                    <Menu.Item key="1" icon={< DesktopOutlined />} >
+                        <Link to="/home/pedido" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                            Pedidos
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="2" icon={< PieChartOutlined />} >
+                        <Link className="LinkMenu" to="/home/colab" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Colaboradores
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={< DesktopOutlined />} >
-                        <Link to="/home/produtos">
+                    <Menu.Item key="3" icon={< DesktopOutlined />} >
+                        <Link to="/home/produto" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Produtos
                         </Link>
                     </Menu.Item>

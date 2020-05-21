@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\colaborador;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\models\Colaborador;
@@ -13,15 +13,14 @@ class ColaboradorController extends Controller
 
     public function index(Request $request, $token)
     {
-        // file_put_contents("debug1.txt", $token);
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid)
-            return Colaborador::all();
+        return Colaborador::all();
         else {
             return [];
         }
     }
-
+    
     public function newColaborador(Request $request)
     {
         $token = $request->token;
@@ -30,8 +29,9 @@ class ColaboradorController extends Controller
             $NovoColaborador = new Colaborador;
             $NovoColaborador->nome = $request->nome;
             $NovoColaborador->tipo = $request->tipo;
+            // file_put_contents("debug1.txt", $NovoColaborador->id);
             if ($NovoColaborador->save())
-                return response()->json(['status_code' => '200']);
+                return response()->json(['status_code' => 200, 'todos_colaboradores' => Colaborador::all()]);
             else {
                 return response()->json(['status_code' => '201']);
             }

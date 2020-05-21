@@ -10,7 +10,7 @@ import Login from './components/login/Login'
 import Colaborador from './components/colaborador/Colaborador'
 import Produto from './components/produto/Produto'
 import Dashboard from './components/home/Dashboard'
-
+import Pedido from './components/pedido/Pedido'
 
 const Routes = () => {
     return (
@@ -27,8 +27,11 @@ export const HomeRoutes = () => {
             <Route path="/home/colab">
                 <Colaborador />
             </Route>
-            <Route path="/home/produtos">
+            <Route path="/home/produto">
                 <Produto />
+            </Route>
+            <Route path="/home/pedido">
+                <Pedido />
             </Route>
             <Route path="/home">
                 <Dashboard />
