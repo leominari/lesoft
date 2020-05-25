@@ -33,10 +33,10 @@ class ColaboradorController extends Controller
             if ($NovoColaborador->save())
                 return response()->json(['status_code' => 200, 'todos_colaboradores' => Colaborador::all()]);
             else {
-                return response()->json(['status_code' => '201']);
+                return response()->json(['status_code' => 201]);
             }
         } else {
-            return response()->json(['status_code' => '202']);
+            return response()->json(['status_code' => 202]);
         }
     }
 }

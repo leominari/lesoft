@@ -7,3 +7,13 @@
 .distancia-direita10 {
     margin-right: 10px;
 }
+
+.distancia-produto {
+    margin-bottom: 10px;
+}
+
+.box {
+    margin-left: 5px;
+    margin-right: 5px;
+    max-width: 100px;
+}

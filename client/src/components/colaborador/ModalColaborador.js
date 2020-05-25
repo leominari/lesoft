@@ -5,11 +5,11 @@ import './styles/colab.css'
 import Axios from 'axios'
 
 import { getToken } from '../../utils/auth';
-import { store } from '../../redux/store'
+import { ColaboradorStore } from '../../redux/store'
 import { dataToColabTable } from '../data'
 
 
-export default function ModalColab() {
+export default function ModalColaborador() {
 
 
     const [ModalVisible, isVisible] = useState(false)
@@ -41,7 +41,7 @@ export default function ModalColab() {
             token: getToken()
         })
         if (response.data.status_code === 200) {
-            store.dispatch({
+            ColaboradorStore.dispatch({
                 type: "CARREGA_COLABORADORES",
                 colaboradores: dataToColabTable(response.data.todos_colaboradores)
             })

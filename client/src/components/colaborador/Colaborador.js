@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from 'antd'
-import { store } from '../../redux/store'
+import { ColaboradorStore } from '../../redux/store'
 import { carregaColaboradores } from '../data'
-import ModalColab from './ModalColab'
+import ModalColaborador from './ModalColaborador'
 import './styles/colab.css'
 
 export default function Colaborador() {
@@ -10,8 +10,8 @@ export default function Colaborador() {
     const [colaboradores, setColaboradores] = useState([])
 
     useEffect(() => {
-        store.subscribe(() => {
-            setColaboradores(store.getState().colaborador)
+        ColaboradorStore.subscribe(() => {
+            setColaboradores(ColaboradorStore.getState())
         })
         carregaColaboradores();
     }, [])
@@ -38,7 +38,7 @@ export default function Colaborador() {
 
     return (
         <div>
-            <ModalColab />
+            <ModalColaborador />
             <Table dataSource={colaboradores} columns={columns} className="distancia-botao" />
         </div>
     );

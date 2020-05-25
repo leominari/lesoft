@@ -29,12 +29,12 @@ class ProdutoController extends Controller
             $NovoProduto->preco = $request->preco;
             $NovoProduto->unidade = $request->unidade;
             if ($NovoProduto->save())
-                return response()->json(['status_code' => '200']);
+                return response()->json(['status_code' => 200, 'todos_produtos' => Produto::all()]);
             else {
-                return response()->json(['status_code' => '201']);
+                return response()->json(['status_code' => 201]);
             }
         } else {
-            return response()->json(['status_code' => '202']);
+            return response()->json(['status_code' => 202]);
         }
     }
 }

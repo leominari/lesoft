@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux';
+import { createStore } from 'redux';
 
 
 const colaboradorReducer = (state = [], action = {}) => {
@@ -14,21 +14,18 @@ const colaboradorReducer = (state = [], action = {}) => {
 
 const produtoReducer = (state = [], action = {}) => {
     if (action.type === "CARREGA_PRODUTOS") {
-        return [...action.colaboradores];
+        return [...action.produtos];
     }
 
     if (action.type === "ATUALIZA_PRODUTOS") {
-        return [...action.colaboradores];
+        return [...action.produtos];
     }
     return state;
 }
 
 
 
-const reducers = combineReducers({
-    colaborador: colaboradorReducer,
-    produto: produtoReducer
-})
 
 
-export const store = createStore(reducers)
+export const ColaboradorStore = createStore(colaboradorReducer)
+export const ProdutoStore = createStore(produtoReducer)
