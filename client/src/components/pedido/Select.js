@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Select } from 'antd'
-import { ColaboradorStore, ProdutoStore } from '../../redux/store';
+import { ColaboradorStore, ProdutoStore, PedidoStore } from '../../redux/store';
 
 
 
 
-export function SelectVendedor() {
+export function SelectVendedor(params) {
     const { Option } = Select;
     const [colaboradorOptions, setColaboradorOptions] = useState([])
 
@@ -14,7 +14,8 @@ export function SelectVendedor() {
     console.log()
 
     function onChange(value) {
-        console.log(`selected ${value}`);
+        params.form.SelectedVendedor = value;
+        console.log(params.form.SelectedVendedor)
     }
 
     function onBlur() {
@@ -40,6 +41,7 @@ export function SelectVendedor() {
 
     React.useEffect(() => {
         rowS()
+
     }, [])
 
 
@@ -64,13 +66,14 @@ export function SelectVendedor() {
 }
 
 
-export function SelectProduto() {
+export function SelectProduto(params) {
     const { Option } = Select;
     const [produtosOptions, setProdutosOptions] = useState([])
     let optionRows = []
-
+    
     function onChange(value) {
-        console.log(`selected ${value}`);
+        params.form.idProduto = value;
+        console.log(params.form.idProduto)
     }
 
     function onBlur() {
@@ -96,6 +99,9 @@ export function SelectProduto() {
 
     React.useEffect(() => {
         rowS()
+        PedidoStore.subscribe(() => {
+            
+        })
     }, [])
 
 

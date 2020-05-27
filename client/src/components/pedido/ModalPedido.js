@@ -9,10 +9,12 @@ export default function ModalPedido() {
     const [colaboradores, setColaboradores] = useState([])
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
-
+    const pedido = {
+        produtos: []
+    }
     const layout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 18 },
+        labelCol: { span: 8 },
+        wrapperCol: { span: 26 },
     };
 
     const validateMessages = {
@@ -26,8 +28,8 @@ export default function ModalPedido() {
     }, [])
 
 
-    const CadastrarPedido = async function (values) {
-        console.log(values)
+    const CadastrarPedido = async function () {
+        console.log(pedido)
         // const response = await Axios.post('/api/pedidos/new', {
         //     ...values.pedido,
         //     token: getToken()
@@ -65,10 +67,10 @@ export default function ModalPedido() {
                 <Form {...layout} name="nest-messages" onFinish={CadastrarPedido} validateMessages={validateMessages}>
 
                     <Form.Item name={['pedido', 'idVendedor']} label="Vendedor" rules={[{ required: true }]}>
-                        <SelectVendedor />
+                        <SelectVendedor form={pedido} />
                     </Form.Item>
                     <Form.Item>
-                        <TabelaItens />
+                        <TabelaItens form={pedido} />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
