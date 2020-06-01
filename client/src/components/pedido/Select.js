@@ -19,15 +19,15 @@ export function SelectVendedor(params) {
     }
 
     function onBlur() {
-        console.log('blur');
+       
     }
 
     function onFocus() {
-        console.log('focus');
+       
     }
 
     function onSearch(val) {
-        console.log('search:', val);
+     
     }
 
 
@@ -68,33 +68,35 @@ export function SelectVendedor(params) {
 
 export function SelectProduto(params) {
     const { Option } = Select;
-    const [produtosOptions, setProdutosOptions] = useState([])
+    const [productsOptions, setproductsOptions] = useState([])
+    const products = ProdutoStore.getState()
     let optionRows = []
     
     function onChange(value) {
-        params.form.idProduto = value;
-        console.log(params.form.idProduto)
+        params.form.productId = products[value].id;
+        params.form.productName = products[value].nome
+        params.form.productUnity = products[value].unidade
+        params.form.productDefaultPrice = products[value].preco
     }
 
     function onBlur() {
-        console.log('blur');
+       
     }
 
     function onFocus() {
-        console.log('focus');
+     
     }
 
     function onSearch(val) {
-        console.log('search:', val);
+
     }
 
 
-    async function rowS() {
-        const resp = ProdutoStore.getState()
-        for (let i = 0; i < resp.length; i++) {
-            optionRows.push(<Option key={resp[i].key}>{resp[i].nome}</Option>)
-        }
-        setProdutosOptions(optionRows)
+    function rowS() {
+        products.forEach(element => {
+            optionRows.push(<Option key={element.key}>{element.nome}</Option>)
+        });
+        setproductsOptions(optionRows)
     }
 
     React.useEffect(() => {
@@ -120,7 +122,7 @@ export function SelectProduto(params) {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
         >
-            {produtosOptions}
+            {productsOptions}
         </Select>
     )
 }

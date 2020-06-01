@@ -22,3 +22,23 @@
     margin-right: 5px;
     max-width: 110px;
 }
+
+.box-preco {
+    margin-right: 5px;
+    max-width: 110px;
+}
+
+.box-number-listItem {
+    margin-left: 5px;
+    margin-right: 5px;
+    max-width: 40px;
+}
+
+.table-auto {
+    table-layout: auto;
+}
+
+.col-auto {
+    width: 30%;
+    min-width: 30%;
+}

@@ -53,6 +53,7 @@ export default function ModalPedido() {
     };
 
 
+
     return (
         <div>
             <Button onClick={showModal}>
@@ -66,11 +67,11 @@ export default function ModalPedido() {
             >
                 <Form {...layout} name="nest-messages" onFinish={CadastrarPedido} validateMessages={validateMessages}>
 
-                    <Form.Item name={['pedido', 'idVendedor']} label="Vendedor" rules={[{ required: true }]}>
+                    <Form.Item name={['pedido', 'idVendedor']} label="Vendedor">
                         <SelectVendedor form={pedido} />
                     </Form.Item>
                     <Form.Item>
-                        <TabelaItens form={pedido} />
+                        <TabelaItens form={pedido} refresh={isVisible} />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

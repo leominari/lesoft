@@ -23,12 +23,23 @@ const produtoReducer = (state = [], action = {}) => {
     return state;
 }
 
-const pedidoReducer = (state = {}, action = {}) => {
-    if (action.type === "set_product_list") {
-        // return [...action.produtos];
+const pedidoProdutoReducer = (state = [], action = {}) => {
+    if (action.type === "CARREGA_PRODUTO") {
+        state.push(action.produtos)
         return state
     }
 
+    return state;
+}
+
+const pedidoReducer = (state = {}, action = {}) => {
+    if (action.type === "CARREGA_PEDIDO") {
+        return [...action.pedidos];
+    }
+
+    if (action.type === "ATUALIZA_PEDIDOS") {
+        return [...action.pedidos];
+    }
     return state;
 }
 
@@ -39,3 +50,4 @@ const pedidoReducer = (state = {}, action = {}) => {
 export const ColaboradorStore = createStore(colaboradorReducer)
 export const ProdutoStore = createStore(produtoReducer)
 export const PedidoStore = createStore(pedidoReducer)
+export const PedidoProdutoStore = createStore(pedidoProdutoReducer)

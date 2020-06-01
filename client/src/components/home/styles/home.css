@@ -10,9 +10,13 @@
     color: white;
 }
 
-
-.LogoTemp { 
+.LogoTemp {
     text-align: center;
     color: white;
-    padding-top: 3px ;
+    padding-top: 3px;
+}
+
+.clear {
+    color: 'inherit';
+    text-decoration: 'inherit';
 }

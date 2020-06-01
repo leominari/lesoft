@@ -8,12 +8,15 @@ import { ColaboradorStore, ProdutoStore } from "../../redux/store";
 //COLABORADOR
 export const dataToColabTable = (data) => {
     const array = []
+    let i = 0
     data.forEach(element => {
         array.push({
-            key: element.id,
+            key: i,
+            id: element.id,
             nome: element.nome,
             tipo: element.tipo
         })
+        i++
     });
     return array
 }
@@ -36,13 +39,16 @@ export const carregaColaboradores = () => {
 //PRODUTO
 export const dataToProdTable = (data) => {
     const array = []
+    let i = 0
     data.forEach(element => {
         array.push({
-            key: element.id,
+            key: i,
+            id: element.id,
             nome: element.nome,
             preco: element.preco,
             unidade: element.unidade
         })
+        i++
     });
     return array
 }

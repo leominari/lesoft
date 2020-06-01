@@ -1,130 +1,68 @@
 import React, { useState } from 'react'
-import { Table, Text, Button, InputNumber, Row, Typography, Form } from 'antd'
-import { SelectProduto } from './Select'
-import { StorePedido, ProdutoStore } from '../../redux/store'
-
+import { Typography, Button, Row } from 'antd'
+import { PedidoProdutoStore } from '../../redux/store'
+import SelectProduct from './SelectProduct'
 import {
-    PlusSquareOutlined
+    MinusSquareOutlined
 } from '@ant-design/icons'
-
 export default function TabelaItens(params) {
-    const [pedidoData, setPedidoData] = useState([])
-    const { Text } = Typography
-    const listaProdutos = []
-    const produto = {}
-    React.useEffect(() => {
+    const { Paragraph } = Typography
+    const [order, setOrder] = useState([])
+    const product = {}
 
+
+    function deleteItem(key) {
+        console.log('item ' + key + ' deletado')
+    }
+
+    function orderRender(data) {
+        const temp = []
+        console.log(data)
+        data.forEach(element => {
+            temp.push(
+                <tr key={element.key} className="ant-table-row ant-table-row-level-0">
+                    <td className="ant-table-cell">{element.name}</td>
+                    <td className="ant-table-cell">R$ {Number(element.price).toFixed(2)}</td>
+                    <td className="ant-table-cell">{element.quantity}</td>
+                    <td><Button size="small" type="link" danger icon={<MinusSquareOutlined />} onClick={deleteItem(element.key)}>Deletar</Button></td>
+                </tr>
+
+            )
+        });
+        return temp
+    }
+
+
+    React.useEffect(() => {
+        PedidoProdutoStore.subscribe(() => {
+            setOrder(orderRender(PedidoProdutoStore.getState()))
+        })
     }, [])
 
-
-    const fixedColumns = [
-        {
-            title: 'Produto',
-            dataIndex: 'name',
-            width: 200,
-        },
-        {
-            title: 'Quantidade',
-            dataIndex: 'quantidade',
-        },
-        {
-            title: 'Preço',
-            dataIndex: 'price',
-        },
-        // {
-        //     title: 'Valor Total',
-        //     dataIndex: 'description',
-        // },
-    ];
-
-    function productName(id){
-        const products = ProdutoStore.getState()
-        console.log(products)
-        products.forEach(product => {
-            if(product.key == id){
-                console.log('salve')
-                return product.nome
-            }
-        })
-
-        
-    }
-    
-
-    function tableData(elements) {
-        const tempData = []
-        elements.forEach(element => {
-            tempData.push({
-                key: element.key,
-                name: productName(element.key),
-                quantidade: element.quantidade,
-                price: element.preco,
-            });
-        });
-        return tempData
-    }
-
-    function adicionaCarrinho() {
-        listaProdutos.push({
-            key: produto.idProduto,
-            quantidade: produto.quantidade,
-            preco: produto.preco
-        })
-        console.log(tableData(listaProdutos))
-        setPedidoData(tableData(listaProdutos))
-    }
-
-    function addQuantidade(value) {
-        produto.quantidade = value
-    }
-    function addPreco(value) {
-        produto.preco = value
-    }
 
     return (
         <>
 
-            <Row className="distancia-produto">
-
-                <SelectProduto form={produto} name="produto" className="box-produto" />
-
-                <div className="box-quantidade">
-                    <InputNumber onChange={addQuantidade} placeholder="Quantidade" />
-                </div>
-                <div className="box-preco">
-                    <InputNumber onChange={addPreco} placeholder="Preço" parser={value => value.replace(/\$\s?|(,*)/g, '')} formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} />
-                </div>
-                <Button onClick={adicionaCarrinho} icon={<PlusSquareOutlined />}></Button>
-
-            </Row>
-
-            <Table
-                columns={fixedColumns}
-                dataSource={pedidoData}
-                pagination={false}
-                bordered
-                summary={pageData => {
-                    let totalBorrow = 0;
-                    let totalRepayment = 0;
-
-                    pageData.forEach(({ borrow, repayment }) => {
-                        totalBorrow += borrow;
-                        totalRepayment += repayment;
-                    });
-
-                    return (
-                        <>
-                            <Table.Summary.Row>
-                                <Table.Summary.Cell>Total</Table.Summary.Cell>
-                                <Table.Summary.Cell colSpan={2}>
-                                    <Text type="danger">{totalBorrow - totalRepayment}</Text>
-                                </Table.Summary.Cell>
-                            </Table.Summary.Row>
-                        </>
-                    );
-                }}
-
-            />
+            <SelectProduct product={product} />
+            <table className="table-auto">
+                <colgroup>
+                    <col className="col-auto"></col>
+                </colgroup>
+                <thead className="ant-table-thead">
+                    <tr>
+                        <th>Produto</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody className="ant-table-tbody" >
+                    {order}
+                </tbody>
+            </table>
         </>
     )
 }
+
+
+

@@ -19,7 +19,7 @@ export default function Colaborador() {
     const columns = [
         {
             title: 'Código do Colaborador',
-            dataIndex: 'key',
+            dataIndex: 'id',
             key: 'key'
 
         },
