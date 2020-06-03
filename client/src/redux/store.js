@@ -29,6 +29,12 @@ const pedidoProdutoReducer = (state = [], action = {}) => {
         return state
     }
 
+    if (action.type === "REMOVE_PRODUTO") {
+        const prods = state
+        state = prods.filter(prod => prod.key != action.produto)
+        return state
+    }
+
     return state;
 }
 

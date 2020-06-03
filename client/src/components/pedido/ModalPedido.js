@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form } from 'antd'
+import { Button, Modal, Form, notification } from 'antd'
 import { carregaColaboradores, carregaProdutos } from '../data';
-import { SelectVendedor } from './Select'
+import { SelectColaborador } from './Select'
 import TabelaItens from './TabelaItens'
+import { PedidoProdutoStore } from '../../redux/store'
+import Axios from 'axios';
+import { getToken } from '../../utils/auth';
 
 export default function ModalPedido() {
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
     const pedido = {
-        produtos: []
+        products: []
     }
     const layout = {
         labelCol: { span: 8 },
@@ -28,22 +31,34 @@ export default function ModalPedido() {
 
     const CadastrarPedido = async function () {
         console.log(pedido)
-        // const response = await Axios.post('/api/pedidos/new', {
-        //     ...values.pedido,
-        //     token: getToken()
-        // })
-        // if (response.data.status_code == 200) {
-        //     isVisible(false)
-        // } else {
-        //     notification.open({
-        //         message: 'Erro no Cadastro',
-        //         description:
-        //             'Ocorreu um erro no cadastro, entre em contato com a adminitração do sistema.',
-        //         onClick: () => {
-        //             console.log('Notification Clicked!');
-        //         },
-        //     });
-        // }
+
+        const obj = {
+            idClient: pedido.idClient,
+            idSalesman: pedido.idSalesman,
+            products: JSON.stringify(pedido.products),
+            token: getToken(),
+        }
+
+        await Axios.post('/api/pedidos/new', obj).then(function (response) {
+            console.log(response)
+            if (response.data.status_code == 200) {
+                isVisible(false)
+            } else {
+                notification['error']({
+                    message: 'Erro no Cadastro',
+                    description:
+                        'Ocorreu um erro no cadastro, entre em contato com a adminitração do sistema.',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
+            }
+        }).catch(function (error) {
+            // your action on error success
+            console.log(error);
+        });
+
+
     };
 
     const FecharModal = e => {
@@ -65,8 +80,11 @@ export default function ModalPedido() {
             >
                 <Form {...layout} name="nest-messages" onFinish={CadastrarPedido} validateMessages={validateMessages}>
 
-                    <Form.Item name={['pedido', 'idVendedor']} label="Vendedor">
-                        <SelectVendedor form={pedido} />
+                    <Form.Item label="Vendedor">
+                        <SelectColaborador type={0} form={pedido} />
+                    </Form.Item>
+                    <Form.Item label="Cliente">
+                        <SelectColaborador type={1} form={pedido} />
                     </Form.Item>
                     <Form.Item>
                         <TabelaItens form={pedido} refresh={isVisible} />

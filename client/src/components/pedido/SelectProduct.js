@@ -15,10 +15,10 @@ export default function TabelaItens(data) {
         PedidoProdutoStore.dispatch({
             type: "CARREGA_PRODUTO",
             produtos: {
-                key: data.product.productId,
+                key: parseInt(data.product.productId),
                 name: data.product.productName,
-                price: data.product.price,
-                quantity: data.product.quantity,
+                price: parseFloat(data.product.price),
+                quantity: parseInt(data.product.quantity),
                 unity: data.product.productUnity
             }
         })

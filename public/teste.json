@@ -1,0 +1,14 @@
+{
+    "pedido": {
+        "products": [
+            {
+                "id": 2,
+                "price": 3,
+                "quantity": 1
+            }
+        ],
+        "idSalesman": "1",
+        "idClient": "0"
+    },
+    "token": "Frg4d8CAXEC35NC5WCTz3Gu1DCgEeWh00fk9OUcCOyJZc9WZaVYzpZctpmEexgvNWFbMrLs74uo4WQeu"
+}

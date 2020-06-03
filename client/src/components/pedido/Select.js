@@ -4,15 +4,43 @@ import { ColaboradorStore, ProdutoStore } from '../../redux/store';
 
 
 
-
-export function SelectVendedor(params) {
+    /*
+     * COLABORADOR TYPE ID
+     * 0 = SALESMAN
+     * 1 = CLIENT
+     */
+export function SelectColaborador(params) {
     const { Option } = Select;
     const [colaboradorOptions, setColaboradorOptions] = useState([])
-
     let optionRows = []
+    const typeCode = params.type
+    const typeName = selectType()
+
+    function selectType(){
+        switch (typeCode) {
+            //salesman
+            case 0:
+                return "Vendedor"
+            //client
+            case 1:
+                return "Cliente"
+
+            default:
+                return "erro"
+        }
+    }
 
     function onChange(value) {
-        params.form.SelectedVendedor = value;
+        switch (typeCode) {
+            case 0:
+                params.form.idSalesman = value
+                break;
+            case 1:
+                params.form.idClient = value
+                break;
+            default:
+                break;
+        }
     }
 
     async function rowS() {
@@ -25,6 +53,7 @@ export function SelectVendedor(params) {
 
     React.useEffect(() => {
         rowS()
+
     }, [])
 
 
@@ -33,7 +62,7 @@ export function SelectVendedor(params) {
         <Select
             showSearch
             style={{ width: 200 }}
-            placeholder="Selecione um vendedor"
+            placeholder={"Selecione um " + typeName}
             optionFilterProp="children"
             onChange={onChange}
             filterOption={(input, option) =>
