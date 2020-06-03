@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Select } from 'antd'
-import { ColaboradorStore, ProdutoStore, PedidoStore } from '../../redux/store';
+import { ColaboradorStore, ProdutoStore } from '../../redux/store';
 
 
 
@@ -11,25 +11,9 @@ export function SelectVendedor(params) {
 
     let optionRows = []
 
-    console.log()
-
     function onChange(value) {
         params.form.SelectedVendedor = value;
-        console.log(params.form.SelectedVendedor)
     }
-
-    function onBlur() {
-       
-    }
-
-    function onFocus() {
-       
-    }
-
-    function onSearch(val) {
-     
-    }
-
 
     async function rowS() {
         const resp = ColaboradorStore.getState()
@@ -41,7 +25,6 @@ export function SelectVendedor(params) {
 
     React.useEffect(() => {
         rowS()
-
     }, [])
 
 
@@ -53,9 +36,6 @@ export function SelectVendedor(params) {
             placeholder="Selecione um vendedor"
             optionFilterProp="children"
             onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onSearch={onSearch}
             filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -71,26 +51,13 @@ export function SelectProduto(params) {
     const [productsOptions, setproductsOptions] = useState([])
     const products = ProdutoStore.getState()
     let optionRows = []
-    
+
     function onChange(value) {
         params.form.productId = products[value].id;
         params.form.productName = products[value].nome
         params.form.productUnity = products[value].unidade
         params.form.productDefaultPrice = products[value].preco
     }
-
-    function onBlur() {
-       
-    }
-
-    function onFocus() {
-     
-    }
-
-    function onSearch(val) {
-
-    }
-
 
     function rowS() {
         products.forEach(element => {
@@ -101,11 +68,7 @@ export function SelectProduto(params) {
 
     React.useEffect(() => {
         rowS()
-        PedidoStore.subscribe(() => {
-            
-        })
     }, [])
-
 
     return (
 
@@ -115,9 +78,6 @@ export function SelectProduto(params) {
             placeholder="Selecione um produto"
             optionFilterProp="children"
             onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onSearch={onSearch}
             filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Button, InputNumber, Row, Input } from 'antd'
+import { Button, Row } from 'antd'
 import { SelectProduto } from './Select'
+import { PedidoProdutoStore } from '../../redux/store'
 
 import {
     PlusCircleOutlined
 } from '@ant-design/icons'
-import { PedidoProdutoStore } from '../../redux/store'
+
 
 export default function TabelaItens(data) {
     const [inputs, setInputs] = useState({})
@@ -33,7 +34,6 @@ export default function TabelaItens(data) {
             ...inputs,
             quantity: e.target
         })
-        console.log(e.target.value)
     }
 
     function addPrice(e) {
@@ -42,7 +42,6 @@ export default function TabelaItens(data) {
             ...inputs,
             price: e.target
         })
-        console.log(data.product.price)
     }
 
     function clear() {

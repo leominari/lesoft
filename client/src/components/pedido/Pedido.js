@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Select } from 'antd'
+import { Table } from 'antd'
 import './styles/pedido.css'
 import Axios from 'axios'
 
@@ -10,8 +10,6 @@ export default function Pedido() {
 
     const [pedidos, setPedidos] = useState([])
 
-
-    const { Option } = Select;
 
     const columns = [
         {

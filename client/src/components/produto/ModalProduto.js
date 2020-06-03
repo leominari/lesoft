@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ColaboradorStore, ProdutoStore } from '../../redux/store'
+import { ProdutoStore } from '../../redux/store'
 import { Button, Modal, Form, Input, notification } from 'antd'
 import Axios from 'axios'
 import { getToken } from '../../utils/auth'

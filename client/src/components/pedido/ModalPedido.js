@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form } from 'antd'
-import { ColaboradorStore } from '../../redux/store';
 import { carregaColaboradores, carregaProdutos } from '../data';
-import { SelectVendedor, SelectProduto } from './Select'
+import { SelectVendedor } from './Select'
 import TabelaItens from './TabelaItens'
 
 export default function ModalPedido() {
-    const [colaboradores, setColaboradores] = useState([])
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
     const pedido = {
