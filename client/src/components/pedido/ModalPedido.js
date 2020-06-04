@@ -30,15 +30,18 @@ export default function ModalPedido() {
 
 
     const CadastrarPedido = async function () {
-        console.log(pedido)
-
+        let total = 0
+        pedido.products.forEach(element => {
+            total += element.price * element.quantity
+        });
         const obj = {
             idClient: pedido.idClient,
             idSalesman: pedido.idSalesman,
             products: JSON.stringify(pedido.products),
-            price: pedido.price,
+            price: total,
             token: getToken(),
         }
+        console.log(obj)
 
         await Axios.post('/api/pedidos/new', obj).then(function (response) {
             if (response.data.status_code === 200) {
