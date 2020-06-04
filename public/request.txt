@@ -2,21 +2,19 @@ POST /api/logout HTTP/1.1
 Accept:            application/json, text/plain, */*
 Accept-Encoding:   gzip, deflate, br
 Accept-Language:   pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
-Cache-Control:     no-cache
 Connection:        close
 Content-Length:    92
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Pragma:            no-cache
 Referer:           http://localhost:4000/home/colab
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
-User-Agent:        Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36
+User-Agent:        Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36
 X-Forwarded-For:   127.0.0.1
 X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"token":"tsByVLvY2ny2cYLntJUWOAJlQJ7tGTaAUOqHfKg6qZAy2BbbQVqx4GUsHNP0OEZjPgUjCGNiEn4xX1pG"}
+{"token":"A2jXtpqNjpzRzldeQVDaMZqhds25OnDk7ZBPz7LsZDBYZIPXCEK0AKMw9nO3el8EKdJa906Yt4y6NX2H"}

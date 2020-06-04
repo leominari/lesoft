@@ -46,7 +46,7 @@ class PedidoController extends Controller
                     $NovoPedidoProduto->quantidade = $product->quantity;
                     $NovoPedidoProduto->save();
                 }
-                return response()->json(['status_code' => '200', 'allorders' => Pedido::all()]);
+                return response()->json(['status_code' => 200, 'allorders' => Pedido::all()]);
             } else {
                 return response()->json(['status_code' => '201']);
             }

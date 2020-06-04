@@ -39,13 +39,10 @@ const pedidoProdutoReducer = (state = [], action = {}) => {
 }
 
 const pedidoReducer = (state = {}, action = {}) => {
-    if (action.type === "CARREGA_PEDIDO") {
-        return [...action.pedidos];
+    if (action.type === "CARREGA_PEDIDOS") {
+        return [...action.orders];
     }
 
-    if (action.type === "ATUALIZA_PEDIDOS") {
-        return [...action.pedidos];
-    }
     return state;
 }
 

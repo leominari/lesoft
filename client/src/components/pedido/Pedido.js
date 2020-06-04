@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Table } from 'antd'
+import { Table, Button } from 'antd'
 import './styles/pedido.css'
 import Axios from 'axios'
 
 import { getToken } from '../../utils/auth';
 import ModalPedido from './ModalPedido'
-
+import { PedidoStore } from '../../redux/store';
+import { carregaPedidos } from '../data';
 export default function Pedido() {
+    const data = []
 
     const [pedidos, setPedidos] = useState([])
 
@@ -19,18 +21,18 @@ export default function Pedido() {
 
         },
         {
-            title: 'Nome',
+            title: 'Vendedor',
             dataIndex: 'nome',
             key: 'nome'
 
         },
         {
-            title: 'Preço',
+            title: 'Cliente',
             dataIndex: 'preco',
             key: 'preco'
         },
         {
-            title: 'Unidade',
+            title: 'Preço',
             dataIndex: 'unidade',
             key: 'unidade'
         },
@@ -40,7 +42,10 @@ export default function Pedido() {
 
 
     React.useEffect(() => {
-        CarregaPedidos()
+        PedidoStore.subscribe(() => {
+            setPedidos(PedidoStore.getState())
+        })
+        carregaPedidos()
     }, [])
 
 
@@ -48,7 +53,8 @@ export default function Pedido() {
     return (
         <div>
             <ModalPedido />
-            <Table dataSource={pedidos} columns={columns} className="distancia-botao" />
+            <Button onClick={() => { console.log(pedidos) }}>Ver Pedidos</Button>
+            <Table dataSource={data} columns={columns} className="distancia-botao" />
         </div>
     );
 
@@ -56,20 +62,6 @@ export default function Pedido() {
 
     // METODOS
 
-    async function CarregaPedidos() {
-        const getUrl = '/api/pedidos/todos' + getToken()
-        const response = await Axios.get(getUrl)
-        const resp = []
-        response.data.forEach(element => {
-            resp.push({
-                key: element.id,
-                nome: element.nome,
-                preco: element.preco,
-                unidade: element.unidade
-            })
-        });
-        setPedidos(resp)
-    }
 
 
 }

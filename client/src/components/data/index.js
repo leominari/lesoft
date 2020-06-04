@@ -1,6 +1,6 @@
 import { getToken } from "../../utils/auth";
 import Axios from "axios";
-import { ColaboradorStore, ProdutoStore } from "../../redux/store";
+import { ColaboradorStore, ProdutoStore, PedidoStore } from "../../redux/store";
 
 
 
@@ -61,6 +61,22 @@ export const carregaProdutos = () => {
         ProdutoStore.dispatch({
             type: "CARREGA_PRODUTOS",
             produtos: dataToProdTable(response.data)
+        })
+    }
+
+    get()
+}
+
+
+export const carregaPedidos = () => {
+
+    async function get() {
+        const getUrl = '/api/pedidos/todos' + getToken()
+        const response = await Axios.get(getUrl)
+        // const resp = []
+        PedidoStore.dispatch({
+            type: "CARREGA_PEDIDOS",
+            orders: response.data
         })
     }
 

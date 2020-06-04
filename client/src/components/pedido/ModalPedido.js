@@ -3,7 +3,7 @@ import { Button, Modal, Form, notification } from 'antd'
 import { carregaColaboradores, carregaProdutos } from '../data';
 import { SelectColaborador } from './Select'
 import TabelaItens from './TabelaItens'
-import { PedidoProdutoStore } from '../../redux/store'
+import { PedidoProdutoStore, PedidoStore } from '../../redux/store'
 import Axios from 'axios';
 import { getToken } from '../../utils/auth';
 
@@ -36,12 +36,16 @@ export default function ModalPedido() {
             idClient: pedido.idClient,
             idSalesman: pedido.idSalesman,
             products: JSON.stringify(pedido.products),
+            price: pedido.price,
             token: getToken(),
         }
 
         await Axios.post('/api/pedidos/new', obj).then(function (response) {
-            console.log(response)
-            if (response.data.status_code == 200) {
+            if (response.data.status_code === 200) {
+                PedidoStore.dispatch({
+                    type: "CARREGA_PEDIDOS",
+                    orders: response.data.allorders
+                })
                 isVisible(false)
             } else {
                 notification['error']({
