@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form, notification } from 'antd'
-import { carregaColaboradores, carregaProdutos } from '../data';
-import { SelectColaborador } from './Select'
-import TabelaItens from './TabelaItens'
-import { PedidoProdutoStore, PedidoStore } from '../../redux/store'
+import { getColaborators, getProducts } from '../data';
+import { ColaboratorSelect } from './Select'
+import TabelaItens from './ItensTable'
+import { OrderStore } from '../../redux/store'
 import Axios from 'axios';
 import { getToken } from '../../utils/auth';
+import { orderAction } from '../../redux/actions';
 
-export default function ModalPedido() {
+export default function ModalOrder() {
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
-    const pedido = {
+    const order = {
         products: []
     }
     const layout = {
@@ -24,29 +25,28 @@ export default function ModalPedido() {
 
 
     React.useEffect(() => {
-        carregaColaboradores()
-        carregaProdutos()
+        getColaborators()
+        getProducts()
     }, [])
 
 
-    const CadastrarPedido = async function () {
+    const newOrder = async function () {
         let total = 0
-        pedido.products.forEach(element => {
+        order.products.forEach(element => {
             total += element.price * element.quantity
         });
         const obj = {
-            idClient: pedido.idClient,
-            idSalesman: pedido.idSalesman,
-            products: JSON.stringify(pedido.products),
+            idClient: order.idClient,
+            idSalesman: order.idSalesman,
+            products: JSON.stringify(order.products),
             price: total,
             token: getToken(),
         }
-        console.log(obj)
 
-        await Axios.post('/api/pedidos/new', obj).then(function (response) {
+        await Axios.post('/api/order/new', obj).then(function (response) {
             if (response.data.status_code === 200) {
-                PedidoStore.dispatch({
-                    type: "CARREGA_PEDIDOS",
+                OrderStore.dispatch({
+                    type: orderAction.SET,
                     orders: response.data.allorders
                 })
                 isVisible(false)
@@ -68,7 +68,7 @@ export default function ModalPedido() {
 
     };
 
-    const FecharModal = e => {
+    const closeModal = e => {
         isVisible(false)
     };
 
@@ -83,22 +83,22 @@ export default function ModalPedido() {
                 title="Novo Pedido"
                 visible={ModalVisible}
                 footer={false}
-                onCancel={FecharModal}
+                onCancel={closeModal}
             >
-                <Form {...layout} name="nest-messages" onFinish={CadastrarPedido} validateMessages={validateMessages}>
+                <Form {...layout} name="nest-messages" onFinish={newOrder} validateMessages={validateMessages}>
 
                     <Form.Item label="Vendedor">
-                        <SelectColaborador type={0} form={pedido} />
+                        <ColaboratorSelect type={0} form={order} />
                     </Form.Item>
                     <Form.Item label="Cliente">
-                        <SelectColaborador type={1} form={pedido} />
+                        <ColaboratorSelect type={1} form={order} />
                     </Form.Item>
                     <Form.Item>
-                        <TabelaItens form={pedido} refresh={isVisible} />
+                        <TabelaItens form={order} refresh={isVisible} />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                        <Button className="distancia-direita10" type="primary" onClick={FecharModal} >
+                        <Button className="distancia-direita10" type="primary" onClick={closeModal} >
                             Cancelar
                         </Button>
                         <Button type="primary" htmlType="submit">

@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
-import { ProdutoStore } from '../../redux/store'
 import { Button, Modal, Form, Input, notification } from 'antd'
-import Axios from 'axios'
-import { getToken } from '../../utils/auth'
-import { dataToProdTable } from '../data'
+import './styles/colab.css'
 
-export default function ModalProduto() {
+import Axios from 'axios'
+
+import { getToken } from '../../utils/auth';
+import { ColaboradorStore, ColaboratorStore } from '../../redux/store'
+import { dataToColabTable } from '../data'
+import { colaboratorAction } from '../../redux/actions';
+
+
+export default function ModalColaborator() {
+
 
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
@@ -20,18 +26,25 @@ export default function ModalProduto() {
     };
 
 
-    const onSubmit = (values) => (isVisible(!CadastrarProduto(values)))
+    const onSubmit = (values) => (isVisible(!newColaborator(values)))
 
 
-    async function CadastrarProduto(values) {
-        const response = await Axios.post('/api/produtos/new', {
-            ...values.produto,
+    const closeModal = e => {
+        isVisible(false)
+    };
+
+
+
+
+    async function newColaborator(values) {
+        const response = await Axios.post('/api/colaborator/new', {
+            ...values.user,
             token: getToken()
         })
         if (response.data.status_code === 200) {
-            ProdutoStore.dispatch({
-                type: "CARREGA_PRODUTOS",
-                produtos: dataToProdTable(response.data.todos_produtos)
+            ColaboratorStore.dispatch({
+                type: colaboratorAction.SET,
+                colaborators: response.data.all_colaborators
             })
             return true
         } else {
@@ -45,37 +58,31 @@ export default function ModalProduto() {
             })
             return false
         }
-    };
+    }
 
-    const FecharModal = e => {
-        isVisible(false)
-    };
 
 
     return (
         <div>
             <Button onClick={showModal}>
-                Novo Produto
+                Novo Colaborador
                 </Button>
             <Modal
-                title="Novo Produto"
+                title="Novo Colaborador"
                 visible={ModalVisible}
                 footer={false}
-                onCancel={FecharModal}
+                onCancel={closeModal}
             >
                 <Form {...layout} name="nest-messages" onFinish={onSubmit} validateMessages={validateMessages}>
 
-                    <Form.Item name={['produto', 'nome']} label="Name" rules={[{ required: true }]}>
+                    <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name={['produto', 'preco']} label="Preço" rules={[{ required: true }]}>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item name={['produto', 'unidade']} label="Unidade" rules={[{ required: true }]}>
+                    <Form.Item name={['user', 'type']} label="Tipo" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                        <Button className="distancia-direita10" type="primary" onClick={FecharModal} >
+                        <Button className="distancia-direita10" type="primary" onClick={closeModal} >
                             Cancelar
                         </Button>
                         <Button type="primary" htmlType="submit">

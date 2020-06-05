@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import { Button, Row } from 'antd'
-import { SelectProduto } from './Select'
-import { PedidoProdutoStore } from '../../redux/store'
+import { ProductSelect } from './Select'
+import { OrderProductStore } from '../../redux/store'
 
 import {
     PlusCircleOutlined
 } from '@ant-design/icons'
+import { orderProductAction } from '../../redux/actions'
 
 
-export default function TabelaItens(data) {
+export default function ItensTable(data) {
     const [inputs, setInputs] = useState({})
 
     function addCart() {
-        PedidoProdutoStore.dispatch({
-            type: "CARREGA_PRODUTO",
+        OrderProductStore.dispatch({
+            type: orderProductAction.SET,
             produtos: {
                 key: parseInt(data.product.productId),
                 name: data.product.productName,
@@ -55,7 +56,7 @@ export default function TabelaItens(data) {
 
             <p>Adicionar Produto</p>
             <Row className="distancia-produto">
-                <SelectProduto form={data.product} name="produto" className="box-produto" />
+                <ProductSelect form={data.product} name="produto" className="box-produto" />
 
                 <div className="box-quantidade">
                     <span className="ant-input-affix-wrapper">

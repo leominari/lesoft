@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from 'antd'
-import { ColaboradorStore } from '../../redux/store'
-import { carregaColaboradores } from '../data'
-import ModalColaborador from './ModalColaborador'
+import { ColaboratorStore } from '../../redux/store'
+import { getColaborators } from '../data'
+import ModalColaborador from './ModalColaborator'
 import './styles/colab.css'
+
 
 export default function Colaborador() {
 
     const [colaboradores, setColaboradores] = useState([])
 
     useEffect(() => {
-        ColaboradorStore.subscribe(() => {
-            setColaboradores(ColaboradorStore.getState())
+        ColaboratorStore.subscribe(() => {
+            setColaboradores(ColaboratorStore.getState())
         })
-        carregaColaboradores();
+        getColaborators();
     }, [])
 
     const columns = [
@@ -25,14 +26,14 @@ export default function Colaborador() {
         },
         {
             title: 'Nome',
-            dataIndex: 'nome',
-            key: 'nome'
+            dataIndex: 'name',
+            key: 'name'
 
         },
         {
             title: 'Tipo',
-            dataIndex: 'tipo',
-            key: 'tipo'
+            dataIndex: 'type',
+            key: 'type'
         },
     ];
 

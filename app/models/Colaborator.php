@@ -4,10 +4,9 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Colaborador extends Model
+class Colaborator extends Model
 {
-    protected $table = 'colaboradors';
     protected $fillable = [
-        'id','nome', 'tipo',
+        'id','name', 'type',
     ];
 }

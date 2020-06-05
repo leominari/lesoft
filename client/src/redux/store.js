@@ -1,46 +1,38 @@
 import { createStore } from 'redux';
+import { colaboratorAction, productAction, orderProductAction, orderAction } from './actions'
 
-
-const colaboradorReducer = (state = [], action = {}) => {
-    if (action.type === "CARREGA_COLABORADORES") {
-        return [...action.colaboradores];
-    }
-
-    if (action.type === "ATUALIZA_COLABORADORES") {
-        return [...action.colaboradores];
+const colaboratorReducer = (state = [], action = {}) => {
+    if (action.type === colaboratorAction.SET) {
+        return [...action.colaborators];
     }
     return state;
 }
 
-const produtoReducer = (state = [], action = {}) => {
-    if (action.type === "CARREGA_PRODUTOS") {
-        return [...action.produtos];
-    }
-
-    if (action.type === "ATUALIZA_PRODUTOS") {
-        return [...action.produtos];
+const productReducer = (state = [], action = {}) => {
+    if (action.type === productAction.SET) {
+        return [...action.products];
     }
     return state;
 }
 
-const pedidoProdutoReducer = (state = [], action = {}) => {
-    if (action.type === "CARREGA_PRODUTO") {
-        state.push(action.produtos)
+const orderProductReducer = (state = [], action = {}) => {
+    if (action.type === orderProductAction.ADD) {
+        state.push(action.products)
         return state
     }
 
-    if (action.type === "REMOVE_PRODUTO") {
+    if (action.type === orderProductAction.DELETE) {
         const prods = state
-        state = prods.filter(prod => prod.key != action.produto)
+        state = prods.filter(prod => prod.key != action.product)
         return state
     }
 
     return state;
 }
 
-const pedidoReducer = (state = {}, action = {}) => {
-    if (action.type === "CARREGA_PEDIDOS") {
-        return [...action.orders];
+const orderReducer = (state = {}, action = {}) => {
+    if (action.type === orderAction.SET) {
+        return [...action.orders]
     }
 
     return state;
@@ -50,7 +42,7 @@ const pedidoReducer = (state = {}, action = {}) => {
 
 
 
-export const ColaboradorStore = createStore(colaboradorReducer)
-export const ProdutoStore = createStore(produtoReducer)
-export const PedidoStore = createStore(pedidoReducer)
-export const PedidoProdutoStore = createStore(pedidoProdutoReducer)
+export const ColaboratorStore = createStore(colaboratorReducer)
+export const ProductStore = createStore(productReducer)
+export const OrderStore = createStore(orderReducer)
+export const OrderProductStore = createStore(orderProductReducer)

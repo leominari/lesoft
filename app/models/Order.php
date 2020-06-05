@@ -4,7 +4,7 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Produto extends Model
+class Order extends Model
 {
     //
 }

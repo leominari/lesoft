@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Select } from 'antd'
-import { ColaboradorStore, ProdutoStore } from '../../redux/store';
+import { ColaboratorStore, ProductStore } from '../../redux/store';
 
 
 
@@ -9,9 +9,9 @@ import { ColaboradorStore, ProdutoStore } from '../../redux/store';
      * 0 = SALESMAN
      * 1 = CLIENT
      */
-export function SelectColaborador(params) {
+export function ColaboratorSelect(params) {
     const { Option } = Select;
-    const [colaboradorOptions, setColaboradorOptions] = useState([])
+    const [colaboratorOptions, setColaboratorOptions] = useState([])
     let optionRows = []
     const typeCode = params.type
     const typeName = selectType()
@@ -44,11 +44,11 @@ export function SelectColaborador(params) {
     }
 
     async function rowS() {
-        const resp = ColaboradorStore.getState()
+        const resp = ColaboratorStore.getState()
         for (let i = 0; i < resp.length; i++) {
             optionRows.push(<Option key={resp[i].key}>{resp[i].nome}</Option>)
         }
-        setColaboradorOptions(optionRows)
+        setColaboratorOptions(optionRows)
     }
 
     React.useEffect(() => {
@@ -69,30 +69,30 @@ export function SelectColaborador(params) {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
         >
-            {colaboradorOptions}
+            {colaboratorOptions}
         </Select>
     )
 }
 
 
-export function SelectProduto(params) {
+export function ProductSelect(params) {
     const { Option } = Select;
-    const [productsOptions, setproductsOptions] = useState([])
-    const products = ProdutoStore.getState()
+    const [productsOptions, setProductsOptions] = useState([])
+    const products = ProductStore.getState()
     let optionRows = []
 
     function onChange(value) {
         params.form.productId = products[value].id;
-        params.form.productName = products[value].nome
-        params.form.productUnity = products[value].unidade
-        params.form.productDefaultPrice = products[value].preco
+        params.form.productName = products[value].name
+        params.form.productUnity = products[value].unity
+        params.form.productDefaultPrice = products[value].price
     }
 
     function rowS() {
         products.forEach(element => {
-            optionRows.push(<Option key={element.key}>{element.nome}</Option>)
+            optionRows.push(<Option key={element.key}>{element.name}</Option>)
         });
-        setproductsOptions(optionRows)
+        setProductsOptions(optionRows)
     }
 
     React.useEffect(() => {

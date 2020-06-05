@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\models\Colaborador;
+use App\models\Colaborator;
 use App\models\UserToken;
 use Illuminate\Http\Request;
 
-class ColaboradorController extends Controller
+class ColaboratorController extends Controller
 {
 
 
@@ -15,23 +15,23 @@ class ColaboradorController extends Controller
     {
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid)
-        return Colaborador::all();
+        return Colaborator::all();
         else {
             return [];
         }
     }
     
-    public function newColaborador(Request $request)
+    public function newColaborator(Request $request)
     {
         $token = $request->token;
+        file_put_contents("debug1.txt", $request);
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid) {
-            $NovoColaborador = new Colaborador;
-            $NovoColaborador->nome = $request->nome;
-            $NovoColaborador->tipo = $request->tipo;
-            // file_put_contents("debug1.txt", $NovoColaborador->id);
-            if ($NovoColaborador->save())
-                return response()->json(['status_code' => 200, 'todos_colaboradores' => Colaborador::all()]);
+            $NewColaborador = new Colaborator;
+            $NewColaborador->name = $request->name;
+            $NewColaborador->type = $request->type;
+            if ($NewColaborador->save())
+                return response()->json(['status_code' => 200, 'all_colaborators' => Colaborator::all()]);
             else {
                 return response()->json(['status_code' => 201]);
             }

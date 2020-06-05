@@ -20,23 +20,19 @@ Route::get('/users', 'LoginController@index');
 
 // Route::get('/dologout', 'home\HomeController@dologout')->name('logout');
 
-Route::group(['prefix' => 'colaborador'], function () {
-    Route::get('/todos{token}', ['uses' => 'ColaboradorController@index']);
-    Route::post('/new', ['uses' => 'ColaboradorController@newColaborador']);
+Route::group(['prefix' => 'colaborator'], function () {
+    Route::get('/getall{token}', ['uses' => 'ColaboratorController@index']);
+    Route::post('/new', ['uses' => 'ColaboratorController@newColaborator']);
 });
 
 
-Route::group(['prefix' => 'produtos'], function () {
-    Route::get('/todos{token}', ['uses' => 'ProdutoController@index']);
-    Route::post('/new', ['uses' => 'ProdutoController@newProduto']);
-});
-
-Route::group(['prefix' => 'comercial'], function () {
-    Route::get('/', ['as' => 'com.home', 'uses' => 'ComercialController@index']);
+Route::group(['prefix' => 'products'], function () {
+    Route::get('/getall{token}', ['uses' => 'ProductController@index']);
+    Route::post('/new', ['uses' => 'ProductController@newProduct']);
 });
 
 
-Route::group(['prefix' => 'pedidos'], function () {
-    Route::get('/todos{token}', ['uses' => 'PedidoController@index']);
-    Route::post('/new', ['uses' => 'PedidoController@newProduto']);
+Route::group(['prefix' => 'orders'], function () {
+    Route::get('/getall{token}', ['uses' => 'OrderController@index']);
+    Route::post('/new', ['uses' => 'OrderController@newOrder']);
 });

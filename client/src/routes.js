@@ -7,10 +7,10 @@ import Home from './components/home/Home'
 import Login from './components/login/Login'
 
 // Home
-import Colaborador from './components/colaborador/Colaborador'
-import Produto from './components/produto/Produto'
+import Colaborator from './components/colaborator/Colaborator'
+import Product from './components/product/Product'
 import Dashboard from './components/home/Dashboard'
-import Pedido from './components/pedido/Pedido'
+import Order from './components/order/Order'
 
 const Routes = () => {
     return (
@@ -25,13 +25,13 @@ export const HomeRoutes = () => {
     return (
         <Switch>
             <Route path="/home/colab">
-                <Colaborador />
+                <Colaborator />
             </Route>
             <Route path="/home/produto">
-                <Produto />
+                <Product />
             </Route>
             <Route path="/home/pedido">
-                <Pedido />
+                <Order />
             </Route>
             <Route path="/home">
                 <Dashboard />

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Button, Typography } from 'antd'
-import { PedidoProdutoStore } from '../../redux/store'
+import { OrderProductStore } from '../../redux/store'
 import SelectProduct from './SelectProduct'
 import {
     MinusSquareOutlined
 } from '@ant-design/icons'
-export default function TabelaItens(params) {
+import { orderProductAction } from '../../redux/actions'
+
+export default function ItensTable(params) {
     const { Text } = Typography
     const [order, setOrder] = useState([])
     const product = {}
@@ -13,13 +15,13 @@ export default function TabelaItens(params) {
     var list = []
 
     function deleteItem(e) {
-        PedidoProdutoStore.dispatch({
-            type: "REMOVE_PRODUTO",
+        OrderProductStore.dispatch({
+            type: orderProductAction.SET,
             produto: e.target.value
         })
     }
 
-    function calcTotal() {
+    function getTotal() {
         let temp = 0
         list.forEach(element => {
             temp += element.price * element.quantity
@@ -27,21 +29,9 @@ export default function TabelaItens(params) {
         setTotal(temp)
     }
 
-    function tList(data) {
-        let temp = []
-        data.forEach(element => {
-            temp.push({
-                id: element.key,
-                price: element.price,
-                quantity: element.quantity
-            })
-        });
-        return temp
-    }
 
     function orderRender(data) {
         const temp = []
-        list = tList(data)
         data.forEach(element => {
             temp.push(
                 <tr key={element.key} className="ant-table-row ant-table-row-level-0">
@@ -53,15 +43,15 @@ export default function TabelaItens(params) {
 
             )
         });
-        calcTotal()
-        params.form.products = list
+        getTotal()
+        params.form.products = data
         return temp
     }
 
 
     React.useEffect(() => {
-        PedidoProdutoStore.subscribe(() => {
-            setOrder(orderRender(PedidoProdutoStore.getState()))
+        OrderProductStore.subscribe(() => {
+            setOrder(orderRender(OrderProductStore.getState()))
         })
     }, [])
 

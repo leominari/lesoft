@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'user' => 'leominari',
             'password' => bcrypt('minari01'),
-            'idColaborador' => DB::table('colaboradors')->insert([
-                'nome' => 'Leonardo Minari',
-                'tipo' => 'cliente-pj',
+            'idColaborator' => DB::table('colaborators')->insert([
+                'name' => 'Leonardo Minari',
+                'type' => 'cliente-pj',
             ]),
             'remember_token' => Str::random(10),
         ]);

@@ -1,13 +1,13 @@
-POST /api/pedidos/new HTTP/1.1
+POST /api/colaborator/new HTTP/1.1
 Accept:            application/json, text/plain, */*
 Accept-Encoding:   gzip, deflate, br
 Accept-Language:   pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
 Connection:        close
-Content-Length:    190
+Content-Length:    135
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Referer:           http://localhost:4000/home/pedido
+Referer:           http://localhost:4000/home/colab
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
@@ -17,4 +17,4 @@ X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"idClient":"1","idSalesman":"0","products":"[{\"id\":1,\"price\":3,\"quantity\":50}]","price":150,"token":"MNSv9ww0IZkdKoQ8MX5ulUf4zIbY0CEczOuOHD2lT4AouDaHIou9KqG4PlfjO5lN2d4NCu8G8cy935kF"}
+{"name":"Renato Minari","type":"cliente-pj","token":"XNSARWTQfgmvaSA7YJX1OekQ6JDy2oYNbzgwomDf3axbWvr7HTMqblw3WvOP7TlOSFkM8qPOyjDRkbde"}

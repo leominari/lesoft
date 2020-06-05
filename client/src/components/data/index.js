@@ -1,34 +1,17 @@
 import { getToken } from "../../utils/auth";
 import Axios from "axios";
-import { ColaboradorStore, ProdutoStore, PedidoStore } from "../../redux/store";
+import { ColaboratorStore, ProdutoStore, PedidoStore, ProductStore, OrderStore } from "../../redux/store";
+import { colaboratorAction, productAction, orderAction } from "../../redux/actions";
 
 
 
-
-//COLABORADOR
-export const dataToColabTable = (data) => {
-    const array = []
-    let i = 0
-    data.forEach(element => {
-        array.push({
-            key: i,
-            id: element.id,
-            nome: element.nome,
-            tipo: element.tipo
-        })
-        i++
-    });
-    return array
-}
-
-
-export const carregaColaboradores = () => {
+export const getColaborators = () => {
     async function get() {
-        const getUrl = '/api/colaborador/todos' + getToken()
+        const getUrl = '/api/colaborator/getall' + getToken()
         const response = await Axios.get(getUrl)
-        ColaboradorStore.dispatch({
-            type: "CARREGA_COLABORADORES",
-            colaboradores: dataToColabTable(response.data)
+        ColaboratorStore.dispatch({
+            type: colaboratorAction.SET,
+            colaborators: response.data
         })
     }
 
@@ -36,31 +19,13 @@ export const carregaColaboradores = () => {
 }
 
 
-//PRODUTO
-export const dataToProdTable = (data) => {
-    const array = []
-    let i = 0
-    data.forEach(element => {
-        array.push({
-            key: i,
-            id: element.id,
-            nome: element.nome,
-            preco: element.preco,
-            unidade: element.unidade
-        })
-        i++
-    });
-    return array
-}
-
-
-export const carregaProdutos = () => {
+export const getProducts = () => {
     async function get() {
-        const getUrl = '/api/produtos/todos' + getToken()
+        const getUrl = '/api/products/getall' + getToken()
         const response = await Axios.get(getUrl)
-        ProdutoStore.dispatch({
-            type: "CARREGA_PRODUTOS",
-            produtos: dataToProdTable(response.data)
+        ProductStore.dispatch({
+            type: productAction.SET,
+            products: response.data
         })
     }
 
@@ -68,17 +33,18 @@ export const carregaProdutos = () => {
 }
 
 
-export const carregaPedidos = () => {
+export const getOrders = () => {
 
     async function get() {
-        const getUrl = '/api/pedidos/todos' + getToken()
+        const getUrl = '/api/orders/getall' + getToken()
         const response = await Axios.get(getUrl)
         // const resp = []
-        PedidoStore.dispatch({
-            type: "CARREGA_PEDIDOS",
+        OrderStore.dispatch({
+            type: orderAction.SET,
             orders: response.data
         })
     }
 
     get()
 }
+
