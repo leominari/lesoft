@@ -1,16 +1,8 @@
-
-# Versões
-| Version      |      Front       |     Back      |
-|:-------------|:----------------:|:-------------:|
-| **v0.01**  |    Adicionado    |  Adicionado   |
-| **v0.011** | Alteração Design | Nada Alterado |
-
-
 Metas 
 ------------ 
  - [x] Login            
- - [ ] Produtos         
- - [ ] Pedidos          
+ - [x] Produtos         
+ - [x] Pedidos          
  - [ ] Contas Bancarias 
- - [ ] Colaboradores    
+ - [x] Colaboradores    
  - [ ] A pagar          
