@@ -9,5 +9,5 @@ export const orderAction = {
 }
 export const orderProductAction = {
     ADD: "ADD_ORDERPRODUCTS",
-    REMOVE: "ADD_ORDERPRODUCTS"
+    REMOVE: "REMOVE_ORDERPRODUCTS"
 }

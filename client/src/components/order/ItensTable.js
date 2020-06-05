@@ -16,8 +16,8 @@ export default function ItensTable(params) {
 
     function deleteItem(e) {
         OrderProductStore.dispatch({
-            type: orderProductAction.SET,
-            produto: e.target.value
+            type: orderProductAction.REMOVE,
+            product: e.target.value
         })
     }
 

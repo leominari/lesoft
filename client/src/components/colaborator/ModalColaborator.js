@@ -5,8 +5,7 @@ import './styles/colab.css'
 import Axios from 'axios'
 
 import { getToken } from '../../utils/auth';
-import { ColaboradorStore, ColaboratorStore } from '../../redux/store'
-import { dataToColabTable } from '../data'
+import { ColaboratorStore } from '../../redux/store'
 import { colaboratorAction } from '../../redux/actions';
 
 

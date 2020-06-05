@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from 'antd'
 import { ColaboratorStore } from '../../redux/store'
-import { getColaborators } from '../data'
-import ModalColaborador from './ModalColaborator'
+import ModalColaborator from './ModalColaborator'
 import './styles/colab.css'
+import dColaborator from '../data/dColaborator'
 
+export default function Colaborator() {
 
-export default function Colaborador() {
-
-    const [colaboradores, setColaboradores] = useState([])
+    const [colaborators, setColaborators] = useState({
+        colaborators: [],
+        tableColaborators: []
+    })
 
     useEffect(() => {
         ColaboratorStore.subscribe(() => {
-            setColaboradores(ColaboratorStore.getState())
+            setColaborators(ColaboratorStore.getState())
         })
-        getColaborators();
+        dColaborator.set()
     }, [])
 
     const columns = [
@@ -39,8 +41,8 @@ export default function Colaborador() {
 
     return (
         <div>
-            <ModalColaborador />
-            <Table dataSource={colaboradores} columns={columns} className="distancia-botao" />
+            <ModalColaborator />
+            <Table dataSource={colaborators.tableColaborators} columns={columns} className="distancia-botao" />
         </div>
     );
 

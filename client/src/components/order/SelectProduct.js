@@ -14,8 +14,8 @@ export default function ItensTable(data) {
 
     function addCart() {
         OrderProductStore.dispatch({
-            type: orderProductAction.SET,
-            produtos: {
+            type: orderProductAction.ADD,
+            products: {
                 key: parseInt(data.product.productId),
                 name: data.product.productName,
                 price: parseFloat(data.product.price),

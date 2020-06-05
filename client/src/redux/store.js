@@ -1,16 +1,47 @@
 import { createStore } from 'redux';
 import { colaboratorAction, productAction, orderProductAction, orderAction } from './actions'
 
-const colaboratorReducer = (state = [], action = {}) => {
+const colaboratorReducer = (state = {}, action = {}) => {
     if (action.type === colaboratorAction.SET) {
-        return [...action.colaborators];
+
+        const temp = []
+        action.colaborators.forEach(element => {
+            temp.push({
+                id: element.id,
+                name: element.name,
+                type: element.type
+            })
+        });
+
+
+        state.colaborators = action.colaborators
+        state.tableColaborators = temp
+        return state;
     }
     return state;
 }
 
 const productReducer = (state = [], action = {}) => {
     if (action.type === productAction.SET) {
-        return [...action.products];
+
+        const temp = []
+        let key = 0
+        action.products.forEach(element => {
+            temp.push({
+                key: key,
+                id: element.id,
+                name: element.name,
+                price: element.price,
+                unity: element.unity
+            })
+            key++
+        });
+
+
+        state.products = action.products
+        state.tableProducts = temp
+
+        return state;
     }
     return state;
 }
@@ -21,7 +52,7 @@ const orderProductReducer = (state = [], action = {}) => {
         return state
     }
 
-    if (action.type === orderProductAction.DELETE) {
+    if (action.type === orderProductAction.REMOVE) {
         const prods = state
         state = prods.filter(prod => prod.key != action.product)
         return state

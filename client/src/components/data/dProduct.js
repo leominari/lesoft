@@ -1,26 +1,27 @@
-import { ColaboratorStore } from '../../redux/store';
 import { getToken } from '../../utils/auth';
 import Axios from 'axios';
-import { colaboratorAction } from '../../redux/actions';
+import { ProductStore } from '../../redux/store';
+import { productAction } from '../../redux/actions';
 
 
-const dColaborator = {
+const dProduct = {
 
     set: () => {
         async function get() {
-            const getUrl = '/api/colaborator/getall' + getToken()
+            const getUrl = '/api/products/getall' + getToken()
             const response = await Axios.get(getUrl)
-            ColaboratorStore.dispatch({
-                type: colaboratorAction.SET,
-                colaborators: response.data
+            ProductStore.dispatch({
+                type: productAction.SET,
+                products: response.data
             })
         }
+    
         get()
     },
 
     getName: (id, data) => {
         if (data.length > 0) {
-            const temp = data.filter(colaborators => colaborators.id === id)
+            const temp = data.filter(product => product.id === id)
             return temp.name
         }
         return null
@@ -36,4 +37,4 @@ const dColaborator = {
 }
 
 
-export default dColaborator
+export default dProduct

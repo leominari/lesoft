@@ -1,13 +1,13 @@
-POST /api/colaborator/new HTTP/1.1
+POST /api/products/new HTTP/1.1
 Accept:            application/json, text/plain, */*
 Accept-Encoding:   gzip, deflate, br
 Accept-Language:   pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7
 Connection:        close
-Content-Length:    135
+Content-Length:    132
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Referer:           http://localhost:4000/home/colab
+Referer:           http://localhost:4000/home/produto
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
@@ -17,4 +17,4 @@ X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"name":"Renato Minari","type":"cliente-pj","token":"XNSARWTQfgmvaSA7YJX1OekQ6JDy2oYNbzgwomDf3axbWvr7HTMqblw3WvOP7TlOSFkM8qPOyjDRkbde"}
+{"name":"teste","price":"3","unity":"KG","token":"XNSARWTQfgmvaSA7YJX1OekQ6JDy2oYNbzgwomDf3axbWvr7HTMqblw3WvOP7TlOSFkM8qPOyjDRkbde"}

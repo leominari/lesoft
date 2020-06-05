@@ -45,8 +45,9 @@ export function ColaboratorSelect(params) {
 
     async function rowS() {
         const resp = ColaboratorStore.getState()
-        for (let i = 0; i < resp.length; i++) {
-            optionRows.push(<Option key={resp[i].key}>{resp[i].nome}</Option>)
+        const colaborators = resp.tableColaborators
+        for (let i = 0; i < colaborators.length; i++) {
+            optionRows.push(<Option key={colaborators[i].id}>{colaborators[i].name}</Option>)
         }
         setColaboratorOptions(optionRows)
     }
@@ -78,18 +79,18 @@ export function ColaboratorSelect(params) {
 export function ProductSelect(params) {
     const { Option } = Select;
     const [productsOptions, setProductsOptions] = useState([])
-    const products = ProductStore.getState()
+    const data = ProductStore.getState()
     let optionRows = []
 
     function onChange(value) {
-        params.form.productId = products[value].id;
-        params.form.productName = products[value].name
-        params.form.productUnity = products[value].unity
-        params.form.productDefaultPrice = products[value].price
+        params.form.productId = data.tableProducts[value].id;
+        params.form.productName = data.tableProducts[value].name
+        params.form.productUnity = data.tableProducts[value].unity
+        params.form.productDefaultPrice = data.tableProducts[value].price
     }
 
     function rowS() {
-        products.forEach(element => {
+        data.tableProducts.forEach(element => {
             optionRows.push(<Option key={element.key}>{element.name}</Option>)
         });
         setProductsOptions(optionRows)

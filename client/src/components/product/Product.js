@@ -5,19 +5,23 @@ import './styles/prod.css'
 import ModalProduct from './ModalProduct'
 import { ProductStore } from '../../redux/store';
 import { getProducts } from '../data';
+import dProduct from '../data/dProduct';
 
 
 
 export default function Product() {
 
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState({
+        products: [],
+        tableProducts: []
+    })
 
 
     useEffect(() => {
         ProductStore.subscribe(() => {
             setProducts(ProductStore.getState())
         })
-        getProducts()
+        dProduct.set()
     }, [])
 
     const columns = [
@@ -48,7 +52,7 @@ export default function Product() {
     return (
         <div>
             <ModalProduct />
-            <Table dataSource={products} columns={columns} className="distancia-botao" />
+            <Table dataSource={products.tableProducts} columns={columns} className="distancia-botao" />
         </div>
     );
 

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form, notification } from 'antd'
-import { getColaborators, getProducts } from '../data';
+import { getProducts } from '../data';
 import { ColaboratorSelect } from './Select'
 import TabelaItens from './ItensTable'
 import { OrderStore } from '../../redux/store'
 import Axios from 'axios';
 import { getToken } from '../../utils/auth';
 import { orderAction } from '../../redux/actions';
+import dColaborator from '../data/dColaborator'
+import dProduct from '../data/dProduct';
 
 export default function ModalOrder() {
     const [ModalVisible, isVisible] = useState(false)
@@ -25,8 +27,8 @@ export default function ModalOrder() {
 
 
     React.useEffect(() => {
-        getColaborators()
-        getProducts()
+        dColaborator.set()
+        dProduct.set()
     }, [])
 
 
