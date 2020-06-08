@@ -26,13 +26,13 @@ Route::group(['prefix' => 'colaborator'], function () {
 });
 
 
-Route::group(['prefix' => 'products'], function () {
+Route::group(['prefix' => 'product'], function () {
     Route::get('/getall{token}', ['uses' => 'ProductController@index']);
     Route::post('/new', ['uses' => 'ProductController@newProduct']);
 });
 
 
-Route::group(['prefix' => 'orders'], function () {
+Route::group(['prefix' => 'order'], function () {
     Route::get('/getall{token}', ['uses' => 'OrderController@index']);
     Route::post('/new', ['uses' => 'OrderController@newOrder']);
 });

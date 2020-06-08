@@ -4,36 +4,39 @@ import { ProductStore } from '../../redux/store';
 import { productAction } from '../../redux/actions';
 
 
-const dProduct = {
+class dProduct {
 
-    set: () => {
+    getAllProducts() {
         async function get() {
-            const getUrl = '/api/products/getall' + getToken()
+            const getUrl = '/api/product/getall' + getToken()
             const response = await Axios.get(getUrl)
             ProductStore.dispatch({
                 type: productAction.SET,
                 products: response.data
             })
         }
-    
-        get()
-    },
 
-    getName: (id, data) => {
+        get()
+    }
+
+
+    getName(id, data) {
         if (data.length > 0) {
             const temp = data.filter(product => product.id === id)
             return temp.name
         }
         return null
-    },
+    }
 
-    getType: (id, data) => {
+    getType(id, data) {
         data.forEach(element => {
             if (element.id === id)
                 return element.type
         });
 
     }
+
+
 }
 
 

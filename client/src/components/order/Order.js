@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Table, Button } from 'antd'
 import ModalPedido from './ModalOrder'
-import { OrderStore } from '../../redux/store';
-import { getOrders } from '../data';
+import { OrderStore, ColaboratorStore } from '../../redux/store';
 import './styles/pedido.css'
+import dColaborator from '../data/dColaborator';
+import dOrder from '../data/dOrder';
 
 export default function Order() {
-    const data = []
-
+    const Order = new dOrder()    
     const [orders, setOrders] = useState([])
 
 
@@ -20,30 +20,33 @@ export default function Order() {
         },
         {
             title: 'Vendedor',
-            dataIndex: 'name',
-            key: 'name'
+            dataIndex: 'idSalesman',
+            key: 'idSalesman'
 
         },
         {
             title: 'Cliente',
-            dataIndex: 'client',
-            key: 'client'
+            dataIndex: 'idClient',
+            key: 'idClient'
         },
         {
             title: 'Preço',
-            dataIndex: 'price',
-            key: 'price'
+            dataIndex: 'finalPrice',
+            key: 'finalPrice'
+        },
+        {
+            title: 'Data',
+            dataIndex: 'date',
+            key: 'date'
         },
     ];
-
-    //EFFECTS
-
 
     React.useEffect(() => {
         OrderStore.subscribe(() => {
             setOrders(OrderStore.getState())
         })
-        getOrders()
+        Order.getAllOrders()
+        Order.toString()
     }, [])
 
 
@@ -52,7 +55,7 @@ export default function Order() {
         <div>
             <ModalPedido />
             <Button onClick={() => { console.log(orders) }}>Ver Pedidos</Button>
-            <Table dataSource={data} columns={columns} className="distancia-botao" />
+            <Table dataSource={orders.tableOrders} columns={columns} className="distancia-botao" />
         </div>
     );
 

@@ -4,9 +4,8 @@ import Axios from 'axios';
 import { colaboratorAction } from '../../redux/actions';
 
 
-const dColaborator = {
-
-    set: () => {
+class dColaborator {
+    getAllColaborators() {
         async function get() {
             const getUrl = '/api/colaborator/getall' + getToken()
             const response = await Axios.get(getUrl)
@@ -16,17 +15,17 @@ const dColaborator = {
             })
         }
         get()
-    },
+    }
 
-    getName: (id, data) => {
+    getName(id, data) {
         if (data.length > 0) {
             const temp = data.filter(colaborators => colaborators.id === id)
             return temp.name
         }
         return null
-    },
+    }
 
-    getType: (id, data) => {
+    getType(id, data) {
         data.forEach(element => {
             if (element.id === id)
                 return element.type

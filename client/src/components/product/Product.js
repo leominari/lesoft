@@ -4,13 +4,12 @@ import './styles/prod.css'
 
 import ModalProduct from './ModalProduct'
 import { ProductStore } from '../../redux/store';
-import { getProducts } from '../data';
 import dProduct from '../data/dProduct';
 
 
 
 export default function Product() {
-
+    const Product =  new dProduct()
     const [products, setProducts] = useState({
         products: [],
         tableProducts: []
@@ -21,14 +20,14 @@ export default function Product() {
         ProductStore.subscribe(() => {
             setProducts(ProductStore.getState())
         })
-        dProduct.set()
+        Product.getAllProducts()
     }, [])
 
     const columns = [
         {
             title: 'Código do Produto',
-            dataIndex: 'key',
-            key: 'key'
+            dataIndex: 'id',
+            key: 'id'
 
         },
         {

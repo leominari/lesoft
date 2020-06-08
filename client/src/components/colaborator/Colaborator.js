@@ -6,7 +6,7 @@ import './styles/colab.css'
 import dColaborator from '../data/dColaborator'
 
 export default function Colaborator() {
-
+    const Colaborator = new dColaborator()
     const [colaborators, setColaborators] = useState({
         colaborators: [],
         tableColaborators: []
@@ -16,13 +16,13 @@ export default function Colaborator() {
         ColaboratorStore.subscribe(() => {
             setColaborators(ColaboratorStore.getState())
         })
-        dColaborator.set()
+        Colaborator.getAllColaborators()
     }, [])
 
     const columns = [
         {
             title: 'Código do Colaborador',
-            dataIndex: 'id',
+            dataIndex: 'key',
             key: 'key'
 
         },

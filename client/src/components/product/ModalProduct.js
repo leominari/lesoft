@@ -24,7 +24,7 @@ export default function ModalProduct() {
 
 
     async function newProduct(values) {
-        const response = await Axios.post('/api/products/new', {
+        const response = await Axios.post('/api/product/new', {
             ...values.product,
             token: getToken()
         })

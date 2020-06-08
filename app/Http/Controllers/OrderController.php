@@ -29,20 +29,19 @@ class OrderController extends Controller
         $idClient = $request->idClient;
         $price = $request->price;
         $token = $request->token;
-        // file_put_contents("debug1.txt", $request);
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid) {
-
+            
             $NewOrder = new Order;
             $NewOrder->idColaborator = $idClient;
             $NewOrder->idSalesman = $idSalesman;
-            $NewOrder->price = $price;
-
+            $NewOrder->finalPrice = $price;
+            
             if ($NewOrder->save()) {
-
+                
                 foreach ($products as $product) {
                     $NewOrderProduct = new OrderProduct;
-                    $NewOrderProduct->idProduct = $product->id;
+                    $NewOrderProduct->idProduct = $product->key;
                     $NewOrderProduct->idOrder = $NewOrder->id;
                     $NewOrderProduct->productPrice = $product->price;
                     $NewOrderProduct->quantity = $product->quantity;

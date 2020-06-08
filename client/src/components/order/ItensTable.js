@@ -32,6 +32,7 @@ export default function ItensTable(params) {
 
     function orderRender(data) {
         const temp = []
+        list = data
         data.forEach(element => {
             temp.push(
                 <tr key={element.key} className="ant-table-row ant-table-row-level-0">

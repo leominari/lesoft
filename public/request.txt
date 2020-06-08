@@ -7,7 +7,7 @@ Content-Length:    92
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Referer:           http://localhost:4000/home/colab
+Referer:           http://localhost:4000/home/produto
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
@@ -17,4 +17,4 @@ X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"token":"A2jXtpqNjpzRzldeQVDaMZqhds25OnDk7ZBPz7LsZDBYZIPXCEK0AKMw9nO3el8EKdJa906Yt4y6NX2H"}
+{"token":"XNSARWTQfgmvaSA7YJX1OekQ6JDy2oYNbzgwomDf3axbWvr7HTMqblw3WvOP7TlOSFkM8qPOyjDRkbde"}

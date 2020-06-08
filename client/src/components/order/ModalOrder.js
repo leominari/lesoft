@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form, notification } from 'antd'
-import { getProducts } from '../data';
 import { ColaboratorSelect } from './Select'
 import TabelaItens from './ItensTable'
 import { OrderStore } from '../../redux/store'
@@ -11,6 +10,8 @@ import dColaborator from '../data/dColaborator'
 import dProduct from '../data/dProduct';
 
 export default function ModalOrder() {
+    const Product =  new dProduct()
+    const Colaborator =  new dColaborator()
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
     const order = {
@@ -27,8 +28,8 @@ export default function ModalOrder() {
 
 
     React.useEffect(() => {
-        dColaborator.set()
-        dProduct.set()
+        Colaborator.getAllColaborators()
+        Product.getAllProducts()
     }, [])
 
 
@@ -44,13 +45,13 @@ export default function ModalOrder() {
             price: total,
             token: getToken(),
         }
-
+        console.log(obj)
         await Axios.post('/api/order/new', obj).then(function (response) {
             if (response.data.status_code === 200) {
-                OrderStore.dispatch({
-                    type: orderAction.SET,
-                    orders: response.data.allorders
-                })
+                // OrderStore.dispatch({
+                //     type: orderAction.SET,
+                //     orders: response.data.allorders
+                // })
                 isVisible(false)
             } else {
                 notification['error']({
@@ -65,10 +66,10 @@ export default function ModalOrder() {
         }).catch(function (error) {
             // your action on error success
             console.log(error);
-        });
+        })
 
 
-    };
+    }
 
     const closeModal = e => {
         isVisible(false)

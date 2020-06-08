@@ -45,7 +45,7 @@ export function ColaboratorSelect(params) {
 
     async function rowS() {
         const resp = ColaboratorStore.getState()
-        const colaborators = resp.tableColaborators
+        const colaborators = resp.colaborators
         for (let i = 0; i < colaborators.length; i++) {
             optionRows.push(<Option key={colaborators[i].id}>{colaborators[i].name}</Option>)
         }
@@ -90,6 +90,7 @@ export function ProductSelect(params) {
     }
 
     function rowS() {
+        console.log(data)
         data.tableProducts.forEach(element => {
             optionRows.push(<Option key={element.key}>{element.name}</Option>)
         });
