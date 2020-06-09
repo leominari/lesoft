@@ -43,10 +43,10 @@ export default function Order() {
 
     React.useEffect(() => {
         OrderStore.subscribe(() => {
-            setOrders(OrderStore.getState())
+            Order.actualizeData()
+            setOrders(Order.tableData())
         })
         Order.getAllOrders()
-        Order.toString()
     }, [])
 
 
@@ -55,7 +55,7 @@ export default function Order() {
         <div>
             <ModalPedido />
             <Button onClick={() => { console.log(orders) }}>Ver Pedidos</Button>
-            <Table dataSource={orders.tableOrders} columns={columns} className="distancia-botao" />
+            <Table dataSource={orders} columns={columns} className="distancia-botao" />
         </div>
     );
 

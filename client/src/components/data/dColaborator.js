@@ -5,6 +5,8 @@ import { colaboratorAction } from '../../redux/actions';
 
 
 class dColaborator {
+    Colaborators = []
+
     getAllColaborators() {
         async function get() {
             const getUrl = '/api/colaborator/getall' + getToken()
@@ -17,10 +19,25 @@ class dColaborator {
         get()
     }
 
-    getName(id, data) {
-        if (data.length > 0) {
-            const temp = data.filter(colaborators => colaborators.id === id)
-            return temp.name
+    actualizeData() {
+        this.Colaborators = ColaboratorStore.getState()
+    }
+
+    tableData() {
+        const temp = []
+        this.Colaborators.forEach(element => {
+            temp.push({
+                key: element.id,
+                name: element.name,
+                type: element.type
+            })
+        });
+    }
+
+
+    getName(id) {
+        if (this.Colaborators.length > 0) {    
+            return this.Colaborators[id-1].name
         }
         return null
     }
