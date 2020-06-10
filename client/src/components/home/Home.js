@@ -43,7 +43,7 @@ export default function Home(props) {
                     </Link>
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" >
-                    <Menu.Item key="1" icon={< DesktopOutlined />} >
+                <Menu.Item key="1" icon={< DesktopOutlined />} >
                         <Link to="/home/pedido" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Pedidos
                         </Link>
@@ -54,6 +54,11 @@ export default function Home(props) {
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={< DesktopOutlined />} >
+                        <Link to="/home/conta" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                            Contas
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="4" icon={< DesktopOutlined />} >
                         <Link to="/home/produto" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Produtos
                         </Link>

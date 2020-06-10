@@ -11,7 +11,7 @@ import Colaborator from './components/colaborator/Colaborator'
 import Product from './components/product/Product'
 import Dashboard from './components/home/Dashboard'
 import Order from './components/order/Order'
-
+import Account from './components/account/Account'
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -32,6 +32,9 @@ export const HomeRoutes = () => {
             </Route>
             <Route path="/home/pedido">
                 <Order />
+            </Route>
+            <Route path="/home/conta">
+                <Account />
             </Route>
             <Route path="/home">
                 <Dashboard />
