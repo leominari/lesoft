@@ -9,25 +9,37 @@ import dProduct from '../data/dProduct';
 
 
 export default function Product() {
-    const Product =  new dProduct()
-    const [products, setProducts] = useState({
-        products: [],
-        tableProducts: []
-    })
+    const Product = new dProduct()
+    const [products, setProducts] = useState([])
 
 
     useEffect(() => {
         ProductStore.subscribe(() => {
-            setProducts(ProductStore.getState())
+            setProducts(tableData(ProductStore.getState()))
         })
         Product.getAllProducts()
     }, [])
 
+    function tableData(data) {
+        const temp = []
+        data.forEach(element => {
+            temp.push({
+                key: element.id,
+                name: element.name,
+                price: element.price,
+                unity: element.unity
+            })
+        });
+        return temp
+
+    }
+
+
     const columns = [
         {
             title: 'Código do Produto',
-            dataIndex: 'id',
-            key: 'id'
+            dataIndex: 'key',
+            key: 'key'
 
         },
         {
@@ -51,7 +63,7 @@ export default function Product() {
     return (
         <div>
             <ModalProduct />
-            <Table dataSource={products.tableProducts} columns={columns} className="distancia-botao" />
+            <Table dataSource={products} columns={columns} className="distancia-botao" />
         </div>
     );
 

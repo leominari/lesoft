@@ -1,6 +1,5 @@
 import { createStore } from 'redux';
 import { colaboratorAction, productAction, orderProductAction, orderAction } from './actions'
-import dOrder from '../components/data/dOrder'
 
 const colaboratorReducer = (state = [], action = {}) => {
     if (action.type === colaboratorAction.SET) {
@@ -12,24 +11,7 @@ const colaboratorReducer = (state = [], action = {}) => {
 
 const productReducer = (state = [], action = {}) => {
     if (action.type === productAction.SET) {
-
-        const temp = []
-        let key = 0
-        action.products.forEach(element => {
-            temp.push({
-                key: key,
-                id: element.id,
-                name: element.name,
-                price: element.price,
-                unity: element.unity
-            })
-            key++
-        });
-
-
-        state.products = action.products
-        state.tableProducts = temp
-
+        state = action.products
         return state;
     }
     return state;

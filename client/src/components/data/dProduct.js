@@ -15,27 +15,8 @@ class dProduct {
                 products: response.data
             })
         }
-
         get()
     }
-
-
-    getName(id, data) {
-        if (data.length > 0) {
-            const temp = data.filter(product => product.id === id)
-            return temp.name
-        }
-        return null
-    }
-
-    getType(id, data) {
-        data.forEach(element => {
-            if (element.id === id)
-                return element.type
-        });
-
-    }
-
 
 }
 

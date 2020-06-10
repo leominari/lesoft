@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Button, Modal, Form, notification } from 'antd'
 import { ColaboratorSelect } from './Select'
 import TabelaItens from './ItensTable'
-import { OrderStore } from '../../redux/store'
 import Axios from 'axios';
 import { getToken } from '../../utils/auth';
-import { orderAction } from '../../redux/actions';
 import dColaborator from '../data/dColaborator'
 import dProduct from '../data/dProduct';
+import { orderAction } from '../../redux/actions';
+import { OrderStore } from '../../redux/store';
 
 export default function ModalOrder() {
     const Product =  new dProduct()
@@ -34,24 +34,18 @@ export default function ModalOrder() {
 
 
     const newOrder = async function () {
-        let total = 0
-        order.products.forEach(element => {
-            total += element.price * element.quantity
-        });
         const obj = {
             idClient: order.idClient,
             idSalesman: order.idSalesman,
             products: JSON.stringify(order.products),
-            price: total,
             token: getToken(),
         }
-        console.log(obj)
         await Axios.post('/api/order/new', obj).then(function (response) {
             if (response.data.status_code === 200) {
-                // OrderStore.dispatch({
-                //     type: orderAction.SET,
-                //     orders: response.data.allorders
-                // })
+                OrderStore.dispatch({
+                    type: orderAction.SET,
+                    orders: response.data.all_orders
+                })
                 isVisible(false)
             } else {
                 notification['error']({

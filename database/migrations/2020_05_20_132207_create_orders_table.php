@@ -17,7 +17,6 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('idColaborator');
             $table->bigInteger('idSalesman');
-            $table->double('finalPrice');
             $table->timestamps();
         });
     }

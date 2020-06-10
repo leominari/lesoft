@@ -7,14 +7,12 @@ import dColaborator from '../data/dColaborator'
 
 export default function Colaborator() {
     const Colaborator = new dColaborator()
-    const [colaborators, setColaborators] = useState({
-        colaborators: [],
-        tableColaborators: []
-    })
+    const [colaborators, setColaborators] = useState([])
 
     useEffect(() => {
         ColaboratorStore.subscribe(() => {
-            setColaborators(ColaboratorStore.getState())
+            const temp = ColaboratorStore.getState()
+            setColaborators(Colaborator.tableData(temp))
         })
         Colaborator.getAllColaborators()
     }, [])
@@ -42,7 +40,7 @@ export default function Colaborator() {
     return (
         <div>
             <ModalColaborator />
-            <Table dataSource={colaborators.tableColaborators} columns={columns} className="distancia-botao" />
+            <Table dataSource={colaborators} columns={columns} className="distancia-botao" />
         </div>
     );
 

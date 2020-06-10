@@ -5,7 +5,6 @@ import { colaboratorAction } from '../../redux/actions';
 
 
 class dColaborator {
-    Colaborators = []
 
     getAllColaborators() {
         async function get() {
@@ -19,36 +18,18 @@ class dColaborator {
         get()
     }
 
-    actualizeData() {
-        this.Colaborators = ColaboratorStore.getState()
-    }
-
-    tableData() {
+    tableData(data) {
         const temp = []
-        this.Colaborators.forEach(element => {
+        data.forEach(element => {
             temp.push({
                 key: element.id,
                 name: element.name,
                 type: element.type
             })
         });
+        return temp
     }
 
-
-    getName(id) {
-        if (this.Colaborators.length > 0) {    
-            return this.Colaborators[id-1].name
-        }
-        return null
-    }
-
-    getType(id, data) {
-        data.forEach(element => {
-            if (element.id === id)
-                return element.type
-        });
-
-    }
 }
 
 

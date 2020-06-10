@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Table, Button } from 'antd'
 import ModalPedido from './ModalOrder'
-import { OrderStore, ColaboratorStore } from '../../redux/store';
+import { OrderStore } from '../../redux/store';
 import './styles/pedido.css'
-import dColaborator from '../data/dColaborator';
-import dOrder from '../data/dOrder';
+import { getToken } from '../../utils/auth';
+import Axios from 'axios';
+import { orderAction } from '../../redux/actions';
 
 export default function Order() {
-    const Order = new dOrder()    
     const [orders, setOrders] = useState([])
 
 
@@ -41,20 +41,48 @@ export default function Order() {
         },
     ];
 
+
+
     React.useEffect(() => {
         OrderStore.subscribe(() => {
-            Order.actualizeData()
-            setOrders(Order.tableData())
+            setOrders(tableData(OrderStore.getState()))
         })
-        Order.getAllOrders()
+        getAllOrders()
+
     }, [])
 
+    async function getAllOrders() {
+        const getUrl = '/api/order/getall' + getToken()
+        const response = await Axios.get(getUrl)
+        OrderStore.dispatch({
+            type: orderAction.SET,
+            orders: response.data
+        })
+    }
+
+
+    function tableData(data) {
+        const temp = []
+        data.forEach(element => {
+            let date = new Date(element.createDate)
+            let day = date.getDate()
+            let month = date.getMonth() + 1
+            let year = date.getFullYear()
+            temp.push({
+                key: element.id,
+                idClient: element.Client,
+                idSalesman: element.Salesman,
+                finalPrice: 'R$ ' + Number(element.price).toFixed(2),
+                date: day + '/' + month + '/' + year
+            })
+        });
+        return temp
+    }
 
 
     return (
         <div>
             <ModalPedido />
-            <Button onClick={() => { console.log(orders) }}>Ver Pedidos</Button>
             <Table dataSource={orders} columns={columns} className="distancia-botao" />
         </div>
     );

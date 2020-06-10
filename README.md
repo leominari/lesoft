@@ -3,6 +3,7 @@ Metas
  - [x] Login            
  - [x] Produtos         
  - [x] Pedidos          
- - [ ] Contas Bancarias 
  - [x] Colaboradores    
- - [ ] A pagar          
+ - [ ] Contas Bancarias 
+ - [ ] A Pagar          
+ - [ ] A Receber          

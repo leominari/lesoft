@@ -1,19 +1,19 @@
 <?php
 
-namespace App\models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class Order extends Model
+class DebugController extends Controller
 {
-    public function getAllOrders()
+    public function index()
     {
         $result = DB::select('SELECT o.id, 
         c.name as Client,
         s.name as Salesman, 
         o.created_at as createDate, 
-        (SELECT SUM((op.productPrice * op.quantity)) 
+        (SELECT (op.productPrice * op.quantity) 
            from order_products as op 
            where o.id = op.idOrder) as price 
        from orders as o, 
@@ -21,8 +21,6 @@ class Order extends Model
             colaborators as s 
        where c.id = o.idColaborator AND 
              s.id = o.idSalesman');
-
-
-        return $result;
+        return view('welcome', ['debug' => $result]);
     }
 }
