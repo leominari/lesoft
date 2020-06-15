@@ -36,3 +36,15 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('/getall{token}', ['uses' => 'OrderController@index']);
     Route::post('/new', ['uses' => 'OrderController@newOrder']);
 });
+
+Route::group(['prefix' => 'account'], function () {
+    Route::get('/getall{token}', ['uses' => 'AccountController@index']);
+    Route::post('/newacc', ['uses' => 'AccountController@newAccount']);
+});
+
+
+Route::group(['prefix' => 'transaction'], function () {
+    Route::get('/get/{id}/{token}' , ['uses' => 'TransactionController@getAccountTransactions']);
+    Route::post('/add', ['uses' => 'TransactionController@addTransaction']);
+    // Route::post('/remove', ['uses' => 'TransactionController@deleteTransaction']);
+});

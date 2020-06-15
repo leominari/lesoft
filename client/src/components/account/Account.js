@@ -1,39 +1,67 @@
 import React, { useState } from 'react'
-import { Skeleton, Switch, Card, Avatar } from 'antd'
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons'
+import { Skeleton, Switch, Card, Avatar, Button, Row } from 'antd'
+import {
+    PlusOutlined,
+    ExportOutlined,
+    MinusOutlined
+} from '@ant-design/icons'
+
+import { AccountStore } from '../../redux/store';
+import ModalAccount from './ModalAccount';
+import dAccount from '../data/dAccount'
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
 function Account() {
+    const Account = new dAccount()
 
-    const [loading, isLoading] = useState(false)
+    const [accounts, setAccounts] = useState([])
+    const [accountCards, setCard] = useState([])
 
-    function onChange(checked) {
-        isLoading(!checked)
-    };
+
+    React.useEffect(() => {
+        AccountStore.subscribe(() => {
+            setAccounts(AccountStore.getState())
+        })
+        Account.getAllAccounts()
+    }, [])
+
+    React.useEffect(() => {
+        let temp = []
+        accounts.forEach(account => {
+            temp.push(
+                <Card
+                    style={{ width: 290, marginTop: 12, marginRight: 12 }}
+                    key={account.id}
+                    actions={[
+                        <Link to={"/home/conta/" + account.id}><ExportOutlined key="select"/></Link>,
+                        <PlusOutlined key="add" />,
+                        <MinusOutlined key="remove" />
+                    ]}
+                >
+                    <Skeleton loading={false} avatar active>
+                        <Meta
+                            avatar={
+                                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                            }
+                            title={account.name}
+                            description={['ultima transação', 'penultima transação', 'antipenutilma transação']}
+                        />
+                    </Skeleton>
+                </Card>
+            )
+        });
+        setCard(temp)
+    }, [accounts])
 
     return (
         <>
-            <Switch checked={!loading} onChange={onChange} />
-
-            <Card
-                style={{ width: 300, marginTop: 16 }}
-                actions={[
-                    <SettingOutlined key="setting" />,
-                    <EditOutlined key="edit" />,
-                    <EllipsisOutlined key="ellipsis" />,
-                ]}
-            >
-                <Skeleton loading={loading} avatar active>
-                    <Meta
-                        avatar={
-                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        }
-                        title="Conta Exemplo"
-                        description={['oi', 'salve','peipei']}
-                    />
-                </Skeleton>
-            </Card>
+            <ModalAccount />
+            <Link to="/home/conta/salve">Salve</Link>
+            <Row>
+                {accountCards}
+            </Row>
         </>
     );
 }

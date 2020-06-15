@@ -1,5 +1,12 @@
 import { createStore } from 'redux';
-import { colaboratorAction, productAction, orderProductAction, orderAction } from './actions'
+import {
+    colaboratorAction,
+    productAction,
+    orderProductAction,
+    orderAction,
+    accountAction,
+    transactionAction
+} from './actions'
 
 const colaboratorReducer = (state = [], action = {}) => {
     if (action.type === colaboratorAction.SET) {
@@ -42,10 +49,26 @@ const orderReducer = (state = [], action = {}) => {
 }
 
 
+const AccountReducer = (state = [], action = {}) => {
+    if (action.type === accountAction.SET) {
+        state = action.accounts
+        return state;
+    }
+    return state;
+}
 
+const TransactionReducer = (state = [], action = {}) => {
+    if (action.type === transactionAction.SET) {
+        state = action.transactions
+        return state;
+    }
+    return state;
+}
 
 
 export const ColaboratorStore = createStore(colaboratorReducer)
 export const ProductStore = createStore(productReducer)
 export const OrderStore = createStore(orderReducer)
 export const OrderProductStore = createStore(orderProductReducer)
+export const AccountStore = createStore(AccountReducer)
+export const TransactionStore = createStore(TransactionReducer)

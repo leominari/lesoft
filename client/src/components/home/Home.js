@@ -54,7 +54,7 @@ export default function Home(props) {
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="3" icon={< DesktopOutlined />} >
-                        <Link to="/home/conta" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                        <Link to="/home/conta/geral" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Contas
                         </Link>
                     </Menu.Item>

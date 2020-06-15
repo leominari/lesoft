@@ -7,7 +7,7 @@ Content-Length:    92
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Referer:           http://localhost:4000/home/pedido
+Referer:           http://localhost:4000/home/conta
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
@@ -17,4 +17,4 @@ X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"token":"DT9Q4HRylRdcvzMPIy8uJfOznl8GVxu72A7XjMnl4hPS1cBpMQyhnlZehWNPZmgXQLnVwgwvdNoeA0Xo"}
+{"token":"YvbjDYGvcvFF94ssNskMHNulaEWJpeCJqIDDTxHEVr7bVOQwWUBPFSg4O8Bfa3C6GeiZmwAEjoFDcdXB"}

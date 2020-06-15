@@ -4,6 +4,6 @@ Metas
  - [x] Produtos         
  - [x] Pedidos          
  - [x] Colaboradores    
- - [ ] Contas Bancarias 
+ - [x] Contas Bancarias 
  - [ ] A Pagar          
  - [ ] A Receber          

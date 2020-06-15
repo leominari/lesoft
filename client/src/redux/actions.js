@@ -11,3 +11,11 @@ export const orderProductAction = {
     ADD: "ADD_ORDERPRODUCTS",
     REMOVE: "REMOVE_ORDERPRODUCTS"
 }
+
+export const accountAction = {
+    SET: "ADD_ACCOUNTS"
+}
+
+export const transactionAction = {
+    SET: "ADD_TRANSACTION"
+}

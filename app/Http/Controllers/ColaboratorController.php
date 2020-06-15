@@ -24,7 +24,6 @@ class ColaboratorController extends Controller
     public function newColaborator(Request $request)
     {
         $token = $request->token;
-        file_put_contents("debug1.txt", $request);
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid) {
             $NewColaborador = new Colaborator;

@@ -11,7 +11,12 @@ import Colaborator from './components/colaborator/Colaborator'
 import Product from './components/product/Product'
 import Dashboard from './components/home/Dashboard'
 import Order from './components/order/Order'
+
+
+//Contas
 import Account from './components/account/Account'
+import ViewAccount from './components/account/ViewAccount'
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -34,10 +39,23 @@ export const HomeRoutes = () => {
                 <Order />
             </Route>
             <Route path="/home/conta">
-                <Account />
+                <AccountRoutes />
             </Route>
             <Route path="/home">
                 <Dashboard />
+            </Route>
+        </Switch>
+    )
+}
+
+export const AccountRoutes = () => {
+    return (
+        <Switch>
+            <Route path="/home/conta/geral">
+                <Account />
+            </Route>
+            <Route path="/home/conta/:id">
+                <ViewAccount />
             </Route>
         </Switch>
     )

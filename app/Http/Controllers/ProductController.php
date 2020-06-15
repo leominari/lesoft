@@ -20,7 +20,7 @@ class ProductController extends Controller
     
     public function newProduct(Request $request)
     {
-        file_put_contents("debug1.txt", $request);
+        // file_put_contents("debug1.txt", $request);
         $token = $request->token;
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid) {
