@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Table, Button, notification } from 'antd';
-import ModalAdd from './transaction/ModalAdd'
+import Axios from 'axios';
+import { Table, Button, notification, Row } from 'antd';
 import { TransactionStore } from '../../redux/store';
 import { transactionAction } from '../../redux/actions';
-import Axios from 'axios';
 import { getToken } from '../../utils/auth';
+
+import ModalCredit from './transaction/ModalCredit'
+import ModalDebit from './transaction/ModalDebit'
 
 function ViewAccount() {
     let { id } = useParams()
     const [transactions, setTransactions] = useState([])
+    const [balance, setBalance] = useState(0)
 
     React.useEffect(() => {
         TransactionStore.subscribe(() => {
@@ -20,14 +23,16 @@ function ViewAccount() {
 
     function tableData(data) {
         const temp = []
-        console.log(data)
+        let balance = 0
         data.forEach(element => {
+            balance += element.value
             temp.push({
                 key: element.id,
                 description: element.description,
                 value: "R$ " + Number(element.value).toFixed(2)
             })
         });
+        setBalance(balance)
         return temp
     }
 
@@ -71,8 +76,12 @@ function ViewAccount() {
     ];
 
     return <>
-        <ModalAdd account={id} />
+        <Row>
+            <ModalCredit account={id} />
+            <ModalDebit account={id} />
+        </Row>
         {/* <Button onClick={() => { console.log(transactions) }}>teste</Button> */}
+        <h1>Saldo: R$ {Number(balance).toFixed(2)}</h1>
         <Table columns={columns} dataSource={transactions} bordered />
     </>
 }
