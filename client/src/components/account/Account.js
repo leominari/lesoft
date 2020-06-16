@@ -58,7 +58,6 @@ function Account() {
     return (
         <>
             <ModalAccount />
-            <Link to="/home/conta/salve">Salve</Link>
             <Row>
                 {accountCards}
             </Row>

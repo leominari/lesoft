@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Axios from 'axios';
-import { Table, Button, notification, Row } from 'antd';
+import { Table, Button, notification, Row, Timeline } from 'antd';
 import { TransactionStore } from '../../redux/store';
 import { transactionAction } from '../../redux/actions';
 import { getToken } from '../../utils/auth';
@@ -24,13 +24,18 @@ function ViewAccount() {
     function tableData(data) {
         const temp = []
         let balance = 0
+        let helpColor = ""
+        let helpDate
         data.forEach(element => {
+            helpDate = new Date(element.createDate)
             balance += element.value
-            temp.push({
-                key: element.id,
-                description: element.description,
-                value: "R$ " + Number(element.value).toFixed(2)
-            })
+            helpColor = element.value >= 0 ? "green" : "red"
+            temp.push(<Timeline.Item key={element.id} color={helpColor} label={"R$ " + element.value}>{element.description} dia {helpDate.getDate() + "/" + (helpDate.getMonth()+1) + "/" + helpDate.getFullYear()}</Timeline.Item>)
+            // temp.push({
+            //     key: element.id,
+            //     description: element.description,
+            //     value: "R$ " + Number(element.value).toFixed(2)
+            // })
         });
         setBalance(balance)
         return temp
@@ -82,7 +87,10 @@ function ViewAccount() {
         </Row>
         {/* <Button onClick={() => { console.log(transactions) }}>teste</Button> */}
         <h1>Saldo: R$ {Number(balance).toFixed(2)}</h1>
-        <Table columns={columns} dataSource={transactions} bordered />
+        <Timeline mode="left">
+            {transactions}
+        </Timeline>
+        {/* <Table columns={columns} dataSource={transactions} bordered /> */}
     </>
 }
 export default ViewAccount

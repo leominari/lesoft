@@ -3,15 +3,19 @@ import { removeToken, getToken } from "../../utils/auth";
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import {
-    DesktopOutlined,
-    PieChartOutlined,
-    LogoutOutlined
+    ProfileOutlined,
+    SolutionOutlined,
+    LogoutOutlined,
+    BankOutlined,
+    TagsOutlined,
+    DollarCircleOutlined
 
 } from '@ant-design/icons';
 import './styles/home.css'
 import axios from 'axios'
 
 import { HomeRoutes } from '../../routes'
+import SubMenu from "antd/lib/menu/SubMenu";
 
 
 export default function Home(props) {
@@ -43,22 +47,27 @@ export default function Home(props) {
                     </Link>
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" >
-                <Menu.Item key="1" icon={< DesktopOutlined />} >
+                    <Menu.Item key="1" icon={<ProfileOutlined />} >
                         <Link to="/home/pedido" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Pedidos
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={< PieChartOutlined />} >
+                    <Menu.Item key="2" icon={<SolutionOutlined />} >
                         <Link className="LinkMenu" to="/home/colab" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Colaboradores
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="3" icon={< DesktopOutlined />} >
+                    <Menu.Item key="3" icon={<DollarCircleOutlined />} >
+                        <Link to="/home/financeiro" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                            Financeiro
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="4" icon={<BankOutlined />} >
                         <Link to="/home/conta/geral" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Contas
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="4" icon={< DesktopOutlined />} >
+                    <Menu.Item key="5" icon={<TagsOutlined />} >
                         <Link to="/home/produto" style={{ color: 'inherit', textDecoration: 'inherit' }}>
                             Produtos
                         </Link>
