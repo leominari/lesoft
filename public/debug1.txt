@@ -1,0 +1,13 @@
+POST /api/bill2receive/new HTTP/1.1
+Accept:         */*
+Content-Length: 161
+Content-Type:   application/json
+Host:           localhost:8000
+User-Agent:     insomnia/2020.2.2
+
+{
+	"date":"2020-6-30",
+	"token": "mzu436lwSYdts5oHSpX7H0BYWVoYJCeakaMP9hpp285DV1uHIdRJddjwP8M6oNhV0N3ch2EnXfKIj9H9",
+	"description": "Teste",
+	"value": "33.33"
+}

@@ -1,36 +1,35 @@
 import React from 'react'
-import { Calendar, Badge } from 'antd'
+import { Calendar, Badge, Row } from 'antd'
+import ptBR from 'antd/es/locale/pt_BR'
+import moment from 'moment'
+import Modal2Pay from './Modal2Pay'
+import Modal2Receive from './Modal2Receive'
+
+moment.updateLocale('pt', {
+  weekdaysMin : ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+  months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+  monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+});
 
 export default function Bill2() {
 
     function getListData(value) {
-
-
-
-
         let listData;
+        // console.log(value)
         switch (value.date()) {
             case 8:
                 listData = [
-                    { type: 'warning', content: 'This is warning event.' },
-                    { type: 'success', content: 'This is usual event.' },
+                    { type: 'error', content: 'Isso é uma conta a pagar' },
                 ];
                 break;
             case 10:
                 listData = [
-                    { type: 'warning', content: 'This is warning event.' },
-                    { type: 'success', content: 'This is usual event.' },
-                    { type: 'error', content: 'This is error event.' },
+                    { type: 'success', content: 'Isso é uma conta a receber' },
                 ];
                 break;
             case 15:
                 listData = [
-                    { type: 'warning', content: 'This is warning event' },
-                    { type: 'success', content: 'This is very long usual event。。....' },
-                    { type: 'error', content: 'This is error event 1.' },
-                    { type: 'error', content: 'This is error event 2.' },
-                    { type: 'error', content: 'This is error event 3.' },
-                    { type: 'error', content: 'This is error event 4.' },
+                    { type: 'processing', content: 'isso é um lembrete' },
                 ];
                 break;
             default:
@@ -40,14 +39,15 @@ export default function Bill2() {
 
     function dateCellRender(value) {
         const listData = getListData(value);
+
         return (
-            <ul className="events">
+            <div className="space-top10">
                 {listData.map(item => (
-                    <li key={item.content}>
-                        <Badge status={item.type} text={item.content} />
-                    </li>
+                    <Badge key={item.content} style={{ backgroundColor: '#52c41a'}} count={5}>
+                        <a href="#" className="head-example" />
+                    </Badge>
                 ))}
-            </ul>
+            </div>
         );
     }
 
@@ -70,6 +70,10 @@ export default function Bill2() {
 
 
     return <>
-        <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
+        <Row>
+            <Modal2Receive />
+            <Modal2Pay />
+        </Row>
+        <Calendar locale={ptBR} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
     </>
 }

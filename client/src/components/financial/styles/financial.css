@@ -1,0 +1,22 @@
+.padrao {
+    margin: 0 auto;
+    max-width: 90%;
+    padding: 40px 40px;
+}
+
+.distancia-direita10 {
+    margin-right: 10px;
+}
+
+.head-example {
+    width: 42px;
+    height: 42px;
+    border-radius: 2px;
+    background: #eee;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.space-top10 {
+    margin-top: 10px;
+}

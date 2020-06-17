@@ -48,3 +48,9 @@ Route::group(['prefix' => 'transaction'], function () {
     Route::post('/add', ['uses' => 'TransactionController@addTransaction']);
     // Route::post('/remove', ['uses' => 'TransactionController@deleteTransaction']);
 });
+
+Route::group(['prefix' => 'bill2receive'], function () {
+    // Route::get('/get/{id}/{token}' , ['uses' => 'TransactionController@getAccountTransactions']);
+    Route::post('/new', ['uses' => 'Bill2Controller@newBill2Receive']);
+    // Route::post('/remove', ['uses' => 'TransactionController@deleteTransaction']);
+});
