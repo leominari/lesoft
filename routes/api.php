@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,8 +50,9 @@ Route::group(['prefix' => 'transaction'], function () {
     // Route::post('/remove', ['uses' => 'TransactionController@deleteTransaction']);
 });
 
-Route::group(['prefix' => 'bill2receive'], function () {
-    // Route::get('/get/{id}/{token}' , ['uses' => 'TransactionController@getAccountTransactions']);
-    Route::post('/new', ['uses' => 'Bill2Controller@newBill2Receive']);
+Route::group(['prefix' => 'bill2'], function () {
+    Route::post('/', ['uses' => 'Bill2Controller@newBill2']);
+    Route::get('/{id}/{token}' , ['uses' => 'Bill2Controller@getById']);
+    Route::get('/{token}' , ['uses' => 'Bill2Controller@getAll']);
     // Route::post('/remove', ['uses' => 'TransactionController@deleteTransaction']);
 });

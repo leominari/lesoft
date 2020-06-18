@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form, Input, notification } from 'antd'
-import './../styles/financial.css'
-import { DatePicker } from 'antd';
-import moment from 'moment';
 import Axios from 'axios'
+import { Button, Modal, Form, Input, notification,DatePicker } from 'antd'
+import './../styles/financial.css'
 
 import { getToken } from '../../../utils/auth';
+import { Bill2Action } from '../../../redux/actions';
+import { Bill2Store } from '../../../redux/store'
 
 export default function Modal2Receive() {
     const [ModalVisible, isVisible] = useState(false)
-    const [bill2, getBill2] = useState([])
     const showModal = () => isVisible(true)
     const dateFormat = 'DD/MM/YYYY'
 
@@ -40,28 +39,27 @@ export default function Modal2Receive() {
             date: dt.year() + "-" + (dt.month()+1) + "-" + dt.date(),
             description: desc,
             value: value,
+            type: "receive",
             token: getToken()
         }
-        console.log(obj)
-        // const response = await Axios.post('/api/colaborator/new', obj)
-        // if (response.data.status_code === 200) {
-        //     // ColaboratorStore.dispatch({
-        //     //     type: colaboratorAction.SET,
-        //     //     colaborators: response.data.all_colaborators
-        //     // })
-        //     console.log(response.data)
-        //     return true
-        // } else {
-        //     notification.open({
-        //         message: 'Erro no Cadastro',
-        //         description:
-        //             'Ocorreu um erro no cadastro, entre em contato com a adminitração do sistema.',
-        //         onClick: () => {
-        //             console.log('Notification Clicked!');
-        //         },
-        //     })
-        //     return false
-        // }
+        const response = await Axios.post('/api/bill2', obj)
+        if (response.data.status_code === 200) {
+            Bill2Store.dispatch({
+                type: Bill2Action.SET,
+                bill2s: response.data.all_bill2
+            })
+            return true
+        } else {
+            notification.open({
+                message: 'Erro no Cadastro',
+                description:
+                    'Ocorreu um erro no cadastro, entre em contato com a adminitração do sistema.',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+            })
+            return false
+        }
     }
 
 

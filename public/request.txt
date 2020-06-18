@@ -7,14 +7,14 @@ Content-Length:    92
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Referer:           http://localhost:4000/home/conta
+Referer:           http://localhost:4000/home/financeiro
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
-User-Agent:        Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36
+User-Agent:        Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36
 X-Forwarded-For:   127.0.0.1
 X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"token":"YvbjDYGvcvFF94ssNskMHNulaEWJpeCJqIDDTxHEVr7bVOQwWUBPFSg4O8Bfa3C6GeiZmwAEjoFDcdXB"}
+{"token":"mzu436lwSYdts5oHSpX7H0BYWVoYJCeakaMP9hpp285DV1uHIdRJddjwP8M6oNhV0N3ch2EnXfKIj9H9"}

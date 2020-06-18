@@ -18,6 +18,7 @@ class CreateBill2sTable extends Migration
             $table->string('description');
             $table->date('date');
             $table->double('value');
+            $table->string('type');
             $table->timestamps();
         });
     }

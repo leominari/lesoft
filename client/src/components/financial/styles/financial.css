@@ -9,12 +9,17 @@
 }
 
 .head-example {
-    width: 42px;
-    height: 42px;
+    width: 28px;
+    height: 28px;
     border-radius: 2px;
     background: #eee;
     display: inline-block;
     vertical-align: middle;
+}
+
+.badge-space {
+    margin-top: 10px;
+    margin-right: 20px;
 }
 
 .space-top10 {

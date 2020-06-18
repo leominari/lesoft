@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form, Input, notification } from 'antd'
+import Axios from 'axios'
+import { Button, Modal, Form, Input, notification,DatePicker } from 'antd'
 import './../styles/financial.css'
 
-import Axios from 'axios'
-
 import { getToken } from '../../../utils/auth';
-import { ColaboratorStore } from '../../../redux/store'
-import { colaboratorAction } from '../../../redux/actions';
-
+import { Bill2Action } from '../../../redux/actions';
+import { Bill2Store } from '../../../redux/store'
 
 export default function Modal2Pay() {
-
-
     const [ModalVisible, isVisible] = useState(false)
-    const showModal = () => isVisible(true);
+    const showModal = () => isVisible(true)
+    const dateFormat = 'DD/MM/YYYY'
 
     const layout = {
         labelCol: { span: 4 },
@@ -25,7 +22,7 @@ export default function Modal2Pay() {
     };
 
 
-    const onSubmit = (values) => (isVisible(!newColaborator(values)))
+    const onSubmit = (values) => (isVisible(!newCAP(values)))
 
 
     const closeModal = e => {
@@ -34,16 +31,22 @@ export default function Modal2Pay() {
 
 
 
-
-    async function newColaborator(values) {
-        const response = await Axios.post('/api/colaborator/new', {
-            ...values.user,
+    async function newCAP(values) {
+        const desc = values.b2p.desc
+        const value = values.b2p.value
+        const dt = values.b2p.date
+        const obj = {
+            date: dt.year() + "-" + (dt.month()+1) + "-" + dt.date(),
+            description: desc,
+            value: value,
+            type: "pay",
             token: getToken()
-        })
+        }
+        const response = await Axios.post('/api/bill2', obj)
         if (response.data.status_code === 200) {
-            ColaboratorStore.dispatch({
-                type: colaboratorAction.SET,
-                colaborators: response.data.all_colaborators
+            Bill2Store.dispatch({
+                type: Bill2Action.SET,
+                bill2s: response.data.all_bill2
             })
             return true
         } else {
@@ -60,25 +63,27 @@ export default function Modal2Pay() {
     }
 
 
-
     return (
         <div>
             <Button onClick={showModal}>
                 Nova Conta a Pagar
                 </Button>
             <Modal
-                title="Nova Conta a Pagar"
+                title="Nova conta a Pagar"
                 visible={ModalVisible}
                 footer={false}
                 onCancel={closeModal}
             >
                 <Form {...layout} name="nest-messages" onFinish={onSubmit} validateMessages={validateMessages}>
 
-                    <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
+                    <Form.Item name={['b2p', 'desc']} label="Descrição" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
-                    <Form.Item name={['user', 'type']} label="Tipo" rules={[{ required: true }]}>
+                    <Form.Item name={['b2p', 'value']} label="Valor" rules={[{ required: true }]}>
                         <Input />
+                    </Form.Item>
+                    <Form.Item name={['b2p', 'date']} label="Data" rules={[{ required: true }]}>
+                        <DatePicker format={dateFormat} />
                     </Form.Item>
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                         <Button className="distancia-direita10" type="primary" onClick={closeModal} >
