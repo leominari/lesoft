@@ -19,9 +19,7 @@ import ViewAccount from './components/account/ViewAccount'
 
 //Financieiro
 import Financial from './components/financial/Financial'
-import B2Pay from './components/financial/bill2/B2Pay'
-import B2Receive from './components/financial/bill2/B2Receive'
-import Bill2 from './components/financial/bill2'
+import Bill2 from './components/financial/bill2/Bill2'
 
 const Routes = () => {
     return (
@@ -76,15 +74,6 @@ export const FinancialRoutes = () => {
             <Route>
                 <Route path="/home/financeiro/">
                     <Bill2 />
-                </Route>
-
-                {/* CAP = contas a pagar */}
-                <Route path="/home/financeiro/cap">
-                    <B2Pay />
-                </Route>
-                {/* CAR = contas a receber */}
-                <Route path="/home/financeiro/car">
-                    <B2Receive />
                 </Route>
             </Route>
         </Switch>

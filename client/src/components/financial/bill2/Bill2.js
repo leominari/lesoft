@@ -10,9 +10,9 @@ import { getToken } from '../../../utils/auth'
 import { Bill2Action } from '../../../redux/actions'
 
 moment.updateLocale('pt', {
-  weekdaysMin : ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-  months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-  monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    weekdaysMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+    monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
 });
 
 
@@ -25,8 +25,8 @@ export default function Bill2() {
             setBill2(Bill2Store.getState())
         })
 
-        async function get(){
-            await Axios.get('/api/bill2/'+ getToken()).then(response => {
+        async function get() {
+            await Axios.get('/api/bill2/' + getToken()).then(response => {
                 Bill2Store.dispatch({
                     type: Bill2Action.SET,
                     bill2s: response.data.all_bill2
@@ -37,35 +37,30 @@ export default function Bill2() {
         get()
     }, [])
 
-    function overdue(td, dt){
+    function overdue(td, dt) {
         const today = new Date(td)
         const date = new Date(dt)
 
-        if(today.getTime === date.getTime){
+        if (today.getTime === date.getTime) {
             return true
         }
 
-        if(date.getFullYear() >= today.getFullYear()){
-            if(date.getFullYear() === today.getFullYear){
-                if(date.getMonth >= today.getMonth){
-                    if(date.getMonth === today.getMonth){
-                        if(date.getDate() >= today.getDate()){
+        if (date.getFullYear() >= today.getFullYear())
+            if (date.getFullYear() === today.getFullYear())
+                if (date.getMonth() >= today.getMonth())
+                    if (date.getMonth() === today.getMonth())
+                        if (date.getDate() >= today.getDate())
                             return false
-                        }else{
+                        else
                             return true
-                        }
-                    }else{
+                    else
                         return false
-                    }
-                }else{
+                else
                     return true
-                }
-            }else{
+            else
                 return false
-            }
-        }else{
+        else
             return true
-        }
     }
 
 
@@ -75,19 +70,19 @@ export default function Bill2() {
             receive: [],
             color: ""
         }
-        const date = value.year()+ "-" + ("00" + (value.month()+1)).slice(-2) + "-" + value.date()
+        const date = value.year() + "-" + ("00" + (value.month() + 1)).slice(-2) + "-" + value.date()
         const temp = bill2
         const today = new moment()
         const todayString = today.year() + "-" + today.month() + "-" + today.day()
 
-        if(bill2.length > 0){
+        if (bill2.length > 0) {
             temp.forEach(element => {
-                if(date === element.date){
-                    if(element.type === "receive"){
-                        listData.color = overdue(today, date) ? "#ff0000" : "#0000FF"
+                if (date === element.date) {
+                    if (element.type === "receive") {
+                        listData.color = overdue(todayString, date) ? "#0000FF" : "#FF0000"
                         listData.receive.push(element)
                         overdue(today, date)
-                    }else {
+                    } else {
                         listData.pay.push(element)
                     }
                 }
@@ -99,24 +94,24 @@ export default function Bill2() {
     function dateCellRender(value) {
         const listData = getListData(value);
         const temp = []
-        if(listData.pay.length > 0){
+        if (listData.pay.length > 0) {
             temp.push(
                 <Badge
                     className="badge-space"
                     key="pay"
-                    style={{ backgroundColor: listData.color}}
+                    style={{ backgroundColor: listData.color }}
                     count={listData.pay.length}
                 >
                     <a href="#" className="head-example" />
                 </Badge>
             )
         }
-        if(listData.receive.length > 0){
+        if (listData.receive.length > 0) {
             temp.push(
                 <Badge
                     className="badge-space"
                     key="receive"
-                    style={{ backgroundColor: '#52c41a'}}
+                    style={{ backgroundColor: '#52c41a' }}
                     count={listData.receive.length}
                 >
                     <a href="#" className="head-example" />
@@ -153,7 +148,7 @@ export default function Bill2() {
         <Row>
             <Modal2Receive />
             <Modal2Pay />
-            <Button onClick={()=>{console.log(bill2.length)}}>ver billt2s</Button>
+            <Button onClick={() => { console.log(bill2.length) }}>ver billt2s</Button>
         </Row>
         <Calendar locale={ptBR} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
     </>
