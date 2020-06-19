@@ -5,5 +5,5 @@ Metas
  - [x] Pedidos          
  - [x] Colaboradores    
  - [x] Contas Bancarias 
- - [ ] A Pagar          
- - [ ] A Receber          
+ - [x] A Pagar          
+ - [x] A Receber          
