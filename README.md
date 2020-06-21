@@ -1,4 +1,9 @@
-Metas 
+Frontend em ReactJS(./client)
+
+Backend em Laravel(./)
+
+
+A Fazer 
 ------------ 
  - [x] Login            
  - [x] Produtos         
