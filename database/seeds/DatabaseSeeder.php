@@ -26,6 +26,29 @@ class DatabaseSeeder extends Seeder
             ]),
             'remember_token' => Str::random(10),
         ]);
+        DB::table('products')->insert([
+            'name' => 'Café Balaio',
+            'price' => 4.50,
+            'unity' => 'KG'
+        ]);
+
+        DB::table('products')->insert([
+            'name' => 'Café Lenhador',
+            'price' => 5.50,
+            'unity' => 'KG'
+        ]);
+
+
+        DB::table('accounts')->insert([
+            'name' => 'Caixa',
+        ]);
+
+        DB::table('colaborators')->insert([
+            'name' => 'Renato Minari',
+            'type' => 'cliente-pj',
+        ]);
+
+
         // $this->call(UsersTableSeeder::class);
     }
 }

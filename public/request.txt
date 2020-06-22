@@ -7,7 +7,7 @@ Content-Length:    92
 Content-Type:      application/json;charset=UTF-8
 Host:              localhost:8000
 Origin:            http://localhost:8000
-Referer:           http://localhost:4000/home/financeiro
+Referer:           http://localhost:4000/home/produto
 Sec-Fetch-Dest:    empty
 Sec-Fetch-Mode:    cors
 Sec-Fetch-Site:    same-origin
@@ -17,4 +17,4 @@ X-Forwarded-Host:  localhost:4000
 X-Forwarded-Port:  4000
 X-Forwarded-Proto: http
 
-{"token":"mzu436lwSYdts5oHSpX7H0BYWVoYJCeakaMP9hpp285DV1uHIdRJddjwP8M6oNhV0N3ch2EnXfKIj9H9"}
+{"token":"dyEwIBKMFzwTB4KCaOxkWML7yj5lNRcjmnsjHc5eeeOWOX6bV5Li8IInJWTTBPGQMJ8Ao8PKsl5rH3C5"}

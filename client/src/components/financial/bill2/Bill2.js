@@ -41,26 +41,35 @@ export default function Bill2() {
         const today = new Date(td)
         const date = new Date(dt)
 
-        if (today.getTime === date.getTime) {
+        if (date.getFullYear() >= today.getFullYear()){
+            if (date.getFullYear() === today.getFullYear()){
+                if (date.getMonth() >= today.getMonth()){
+                    if (date.getMonth() === today.getMonth()){
+                        if (date.getDate() >= today.getDate()){
+                            if(date.getDate() === today.getDate()){
+                                return false
+                            }
+                            else{
+                                return false
+                            }
+                        }else{
+                            return true
+                        }
+                    }else{
+                        return false
+                    }
+                }else{
+                    return true
+                }
+            }else{
+                return false
+            }
+        }else{
             return true
         }
 
-        if (date.getFullYear() >= today.getFullYear())
-            if (date.getFullYear() === today.getFullYear())
-                if (date.getMonth() >= today.getMonth())
-                    if (date.getMonth() === today.getMonth())
-                        if (date.getDate() >= today.getDate())
-                            return false
-                        else
-                            return true
-                    else
-                        return false
-                else
-                    return true
-            else
-                return false
-        else
-            return true
+        console.log('salve')
+
     }
 
 
@@ -73,17 +82,15 @@ export default function Bill2() {
         const date = value.year() + "-" + ("00" + (value.month() + 1)).slice(-2) + "-" + value.date()
         const temp = bill2
         const today = new moment()
-        const todayString = today.year() + "-" + today.month() + "-" + today.day()
-
-        if (bill2.length > 0) {
+        if (temp.length > 0) {
             temp.forEach(element => {
                 if (date === element.date) {
-                    if (element.type === "receive") {
-                        listData.color = overdue(todayString, date) ? "#0000FF" : "#FF0000"
-                        listData.receive.push(element)
+                    if (element.type === "pay") {
+                        listData.color = overdue(today._d, date) ? "#FF0000" : "#0000FF"
+                        listData.pay.push(element)
                         overdue(today, date)
                     } else {
-                        listData.pay.push(element)
+                        listData.receive.push(element)
                     }
                 }
             });
@@ -102,7 +109,10 @@ export default function Bill2() {
                     style={{ backgroundColor: listData.color }}
                     count={listData.pay.length}
                 >
-                    <a href="#" className="head-example" />
+                    <div className="head-example"
+                         onClick={() => { console.log(listData.pay) }}
+                    >
+                    </div>
                 </Badge>
             )
         }
@@ -114,7 +124,10 @@ export default function Bill2() {
                     style={{ backgroundColor: '#52c41a' }}
                     count={listData.receive.length}
                 >
-                    <a href="#" className="head-example" />
+                    <div className="head-example"
+                         onClick={() => { console.log(listData.receive) }}
+                    >
+                    </div>
                 </Badge>
             )
         }

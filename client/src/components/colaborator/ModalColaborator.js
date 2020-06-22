@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Modal, Form, Input, notification } from 'antd'
+import { Button, Modal, Form, Input, notification, Radio } from 'antd'
 import './styles/colab.css'
 
 import Axios from 'axios'
@@ -7,14 +7,15 @@ import Axios from 'axios'
 import { getToken } from '../../utils/auth';
 import { ColaboratorStore } from '../../redux/store'
 import { colaboratorAction } from '../../redux/actions';
-
+import PessoaFisica from './type/PessoaFisica'
+import PessoaJuridica from './type/PessoaJuridica'
 
 export default function ModalColaborator() {
 
 
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true);
-
+    const [typeColaborator, setTypeColaborator] = useState(0)
     const layout = {
         labelCol: { span: 4 },
         wrapperCol: { span: 18 },
@@ -59,7 +60,26 @@ export default function ModalColaborator() {
         }
     }
 
+    function selectColab(e){
+        setTypeColaborator(e.target.value)
+    }
 
+
+    function ColaboratorType(){
+        switch (typeColaborator) {
+            case 0:
+                return <></>
+                break;
+            case "PF":
+                return <PessoaFisica />
+                break;
+            case "PJ":
+                return <PessoaJuridica />
+                break;
+            default:
+                break;
+        }
+    }
 
     return (
         <div>
@@ -74,6 +94,11 @@ export default function ModalColaborator() {
             >
                 <Form {...layout} name="nest-messages" onFinish={onSubmit} validateMessages={validateMessages}>
 
+                    <Radio.Group onChange={selectColab} >
+                        <Radio value={"PF"}>Pessoa Fisica</Radio>
+                        <Radio value={"PJ"}>Pessoa Juridica</Radio>
+                    </Radio.Group>
+                    <ColaboratorType />
                     <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
