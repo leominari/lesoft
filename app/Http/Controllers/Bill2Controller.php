@@ -27,6 +27,7 @@ class Bill2Controller extends Controller
         $description = $request->description;
         $value = $request->value;
         $type= $request->type;
+        $idAccount = $request->idAccount;
         $Auth = UserToken::where('token', $token)->first();
         if ($Auth->valid) {
             $NewBill2 = new Bill2;
@@ -34,6 +35,7 @@ class Bill2Controller extends Controller
             $NewBill2->description = $description;
             $NewBill2->date = $date;
             $NewBill2->type = $type;
+            $NewBill2->idAccount = $idAccount;
             $NewBill2->save();
             if ($NewBill2->save())
                 return response()->json(['status_code' => 200, 'all_bill2' => Bill2::all()]);

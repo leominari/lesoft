@@ -6,12 +6,13 @@ import './../styles/financial.css'
 import { getToken } from '../../../utils/auth';
 import { Bill2Action } from '../../../redux/actions';
 import { Bill2Store } from '../../../redux/store'
+import SelectAccount from '../../account/SelectAccount';
 
 export default function Modal2Receive() {
     const [ModalVisible, isVisible] = useState(false)
     const showModal = () => isVisible(true)
     const dateFormat = 'DD/MM/YYYY'
-
+    const data = {}
     const layout = {
         labelCol: { span: 4 },
         wrapperCol: { span: 18 },
@@ -40,6 +41,7 @@ export default function Modal2Receive() {
             description: desc,
             value: value,
             type: "receive",
+            idAccount: data.idAccount,
             token: getToken()
         }
         const response = await Axios.post('/api/bill2', obj)
@@ -84,6 +86,9 @@ export default function Modal2Receive() {
                     </Form.Item>
                     <Form.Item name={['b2p', 'date']} label="Data" rules={[{ required: true }]}>
                         <DatePicker format={dateFormat} />
+                    </Form.Item>
+                    <Form.Item label="Conta" rules={[{ required: true }]}>
+                        <SelectAccount data={data}/>
                     </Form.Item>
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                         <Button className="distancia-direita10" type="primary" onClick={closeModal} >

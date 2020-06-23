@@ -30,6 +30,9 @@ class OrderController extends Controller
         $idClient = $request->idClient;
         $token = $request->token;
         $Auth = UserToken::where('token', $token)->first();
+        if($request->idAccount){
+            file_put_contents("debug1.txt", 'salve');
+        }
         if ($Auth->valid) {
 
             $NewOrder = new Order;
@@ -46,7 +49,7 @@ class OrderController extends Controller
                     $NewOrderProduct->quantity = $product->quantity;
                     $NewOrderProduct->save();
                 }
-                return response()->json(['status_code' => 200, 'all_orders' => $NewOrder->getAllOrders()]);
+                return response()->json(['status_code' => 200, 'all_orders' => $NewOrder->getAllOrders(), 'new_order'=> $NewOrder]);
             } else {
                 return response()->json(['status_code' => '201']);
             }

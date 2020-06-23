@@ -15,6 +15,7 @@ class CreateBill2sTable extends Migration
     {
         Schema::create('bill2s', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('idAccount');
             $table->string('description');
             $table->date('date');
             $table->double('value');
